@@ -35,5 +35,6 @@
         "moduleDirectory": ["node_modules", "@types"]
       },
       "typescript": {} 
+    }
   }
 }
