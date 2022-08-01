@@ -25,9 +25,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start & yarn server",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start & yarn server",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "server": "json-server --watch ./data/db.json --port 4000"
   },
@@ -59,6 +59,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "react-app-rewired": "^2.2.1",
+    "customize-cra": "^1.0.0"
   }
 }
