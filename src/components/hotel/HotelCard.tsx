@@ -13,13 +13,7 @@ interface HotelCardProps {
   };
 }
 
-export default function HotelCard({
-  imageSize,
-  name,
-  base,
-  max,
-  price,
-}: HotelCardProps) {
+function HotelCard({ imageSize, name, base, max, price }: HotelCardProps) {
   return (
     <Container>
       <Wrapper>
@@ -57,6 +51,8 @@ export default function HotelCard({
     </Container>
   );
 }
+
+export default HotelCard;
 
 const Container = styled.article`
   width: 600px;

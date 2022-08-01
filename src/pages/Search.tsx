@@ -6,7 +6,7 @@ const HomeImageSize: { width: number; height: number } = {
   height: 170,
 };
 
-export default function Search() {
+function Search() {
   return (
     <div>
       <HotelCard
@@ -19,3 +19,5 @@ export default function Search() {
     </div>
   );
 }
+
+export default Search;
