@@ -1,5 +1,6 @@
-import SearchBar from '@components/search/SearchBar';
 import React from 'react';
+
+import SearchBar from '@components/search/SearchBar';
 
 function Search() {
   return (

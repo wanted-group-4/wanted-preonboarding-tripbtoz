@@ -15,6 +15,6 @@ export default IconWrapper;
 const IconContainer = styled.span`
   display: flex;
   align-items: center;
-  /* font-size: 24px; */
+  font-size: 24px;
   color: ${props => (props.color ? props.theme.color[props.color] : '#000')};
 `;

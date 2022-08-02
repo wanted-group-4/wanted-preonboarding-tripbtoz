@@ -8,7 +8,9 @@ function SearchBar() {
   return (
     <SearchBarContainer>
       <SearchDate />
+      {/* modal */}
       <SearchCount />
+      {/* modal */}
     </SearchBarContainer>
   );
 }
