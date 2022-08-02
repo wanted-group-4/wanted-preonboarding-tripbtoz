@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
-import { monthArray } from '@src/constants/day';
+import { monthArray } from '@constants/day';
 
 interface IDatesProps {
   year: number;
