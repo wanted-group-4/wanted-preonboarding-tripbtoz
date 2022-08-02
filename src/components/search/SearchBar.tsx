@@ -1,25 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  AiOutlineCalendar,
-  AiOutlineUser,
-  AiOutlineSearch,
-} from 'react-icons/ai';
 
-import LabelInputWrapper from '@components/wrappers/LabelInputWrapper';
-import IconWrapper from '@src/components/wrappers/IconWrapper';
+import SearchDate from '@components/search/SearchDate';
+import SearchCount from '@components/search/SearchCount';
 
 function SearchBar() {
   return (
     <SearchBarContainer>
-      <IconWrapper icon={<AiOutlineCalendar />} />
-      <LabelInputWrapper label="체크인" value="" />
-      <LabelInputWrapper visible={true} label="" value="1박" />
-      <LabelInputWrapper label="체크아웃" value="" />
-      <IconWrapper icon={<AiOutlineUser />} />
-      <LabelInputWrapper label="성인" value="" />
-      <LabelInputWrapper label="어린이" value="" />
-      <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
+      <SearchDate />
+      <SearchCount />
     </SearchBarContainer>
   );
 }
@@ -27,6 +16,9 @@ function SearchBar() {
 export default SearchBar;
 
 const SearchBarContainer = styled.div`
+  width: ${({ theme }) => theme.size.tablet};
   display: flex;
   align-items: center;
+  border: 1px solid ${({ theme }) => theme.color.grey_03};
+  border-radius: 4px;
 `;

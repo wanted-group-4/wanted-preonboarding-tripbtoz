@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router';
 
 import Layout from '@components/layout/Layout';
 import Search from '@pages/Search';
-import Detail from '@pages/Search';
-import MyPage from '@pages/Search';
+import Detail from '@pages/Detail';
+import MyPage from '@pages/MyPage';
 
 function Router() {
   return (

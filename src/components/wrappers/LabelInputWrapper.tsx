@@ -24,10 +24,7 @@ function LabelInputWrapper({ label, value, visible = true }: ILabelInputProps) {
 
 export default LabelInputWrapper;
 
-const ItemContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
+const ItemContainer = styled.div``;
 
 const LabelContainer = styled.label`
   color: ${({ theme }) => theme.color.grey_03};
