@@ -6,7 +6,7 @@ import { disabledDate } from '@utils/disabledDate';
 import setDefaultDate from '@utils/setDefaultDate';
 import Month from '@components/calendar/Month';
 
-const Calendar = () => {
+function Calendar() {
   const checkRef = useRef<{ [key: string]: string }>({});
   const dateRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
@@ -32,7 +32,7 @@ const Calendar = () => {
       ))}
     </CalendarContainer>
   );
-};
+}
 
 export default Calendar;
 

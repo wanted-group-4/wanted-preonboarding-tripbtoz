@@ -16,7 +16,7 @@ interface IMonthProps {
   month: number;
 }
 
-const Month = ({ checkRef, dateRef, year, month }: IMonthProps) => {
+function Month({ checkRef, dateRef, year, month }: IMonthProps) {
   const monthTitle = format(new Date(year, month), 'yyyy.MM');
 
   const handleDate = (e: any) => {
@@ -66,7 +66,7 @@ const Month = ({ checkRef, dateRef, year, month }: IMonthProps) => {
       <Dates year={year} month={month} dateRef={dateRef} />
     </MonthContainer>
   );
-};
+}
 
 export default Month;
 
