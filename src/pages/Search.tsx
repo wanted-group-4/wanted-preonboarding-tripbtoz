@@ -6,9 +6,12 @@ const HomeImageSize: { width: number; height: number } = {
   height: 170,
 };
 
+import SearchBar from '@components/search/SearchBar';
+
 function Search() {
   return (
     <div>
+      <SearchBar />
       <HotelCard
         name="웨스틴 조선 서울(Home 카드)"
         base={2}
