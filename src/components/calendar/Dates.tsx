@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
+
 import { monthArray } from '@constants/day';
 
 interface IDatesProps {
   year: number;
   month: number;
   dateRef: React.MutableRefObject<{
-    [key: string]: HTMLDivElement | null;
+    [key: string]: HTMLDivElement;
   }>;
 }
 
@@ -26,7 +27,9 @@ function Dates({ year, month, dateRef }: IDatesProps) {
             key={day}
             start={start}
             dayOfWeek={dayOfWeek}
-            ref={ref => (dateRef.current[date] = ref)}
+            ref={ref => {
+              if (ref !== null) dateRef.current[date] = ref;
+            }}
           >
             <Day dayOfWeek={dayOfWeek}>{day}</Day>
           </DayWrap>
@@ -41,7 +44,10 @@ export default Dates;
 const DatesContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto;
-  row-gap: 2.5vw;
+  row-gap: 15px;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    row-gap: 3.8vw;
+  }
 `;
 
 const DayWrap = styled.div<{ start: any; dayOfWeek: number }>`
@@ -102,11 +108,25 @@ const DayWrap = styled.div<{ start: any; dayOfWeek: number }>`
       color: #ccc;
     }
   }
+  &.today {
+    position: relative;
+    ::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: ${({ theme }) => theme.color.pink_02};
+    }
+  }
 `;
 const Day = styled.button<{ dayOfWeek: number }>`
-  font-size: 2.5vw;
-  width: 5vw;
-  height: 5vw;
+  font-size: 16px;
+  width: 35px;
+  height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,4 +136,9 @@ const Day = styled.button<{ dayOfWeek: number }>`
     if (dayOfWeek === 0) return '#FF375C';
     return '#000';
   }};
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    font-size: 4vw;
+    width: 10vw;
+    height: 10vw;
+  }
 `;
