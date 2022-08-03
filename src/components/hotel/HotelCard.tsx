@@ -54,8 +54,8 @@ function HotelCard({ imageSize, name, base, max, price }: HotelCardProps) {
 
 export default HotelCard;
 
-const Container = styled.article`
-  width: 600px;
+const Container = styled.section`
+  width: 100%;
   cursor: pointer;
 `;
 
