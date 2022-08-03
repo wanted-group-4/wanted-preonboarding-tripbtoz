@@ -18,7 +18,6 @@ function SearchBar() {
 export default SearchBar;
 
 const SearchBarContainer = styled.div`
-  width: ${({ theme }) => theme.size.tablet};
   display: flex;
   align-items: center;
   border: 1px solid ${({ theme }) => theme.color.grey_03};
