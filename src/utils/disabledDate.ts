@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-export const disabledDate = (
+const disabledDate = (
   dateRef: React.MutableRefObject<{
     [key: string]: HTMLDivElement | null;
   }>,
@@ -16,3 +16,5 @@ export const disabledDate = (
     dateRef.current[String(i)]?.classList.add('disabled');
   }
 };
+
+export default disabledDate;
