@@ -3,6 +3,7 @@ import HotelCard from '@components/hotel/HotelCard';
 import styled from 'styled-components';
 import axios from 'axios';
 import useIntersection from '@hooks/useIntersection';
+import SearchBar from '@src/components/search/SearchBar';
 
 const HomeImageSize: { width: number; height: number } = {
   width: 220,
@@ -43,7 +44,9 @@ function Search() {
 
   return (
     <Container>
-      <Temp_searchBar />
+      <SearchBarWrapper>
+        <SearchBar />
+      </SearchBarWrapper>
       <HotelCardWrapper>
         {data &&
           data.map((hotel: Hotel, key) => (
@@ -68,14 +71,11 @@ export default Search;
 const Container = styled.div`
   padding-top: 50px;
 `;
-const Temp_searchBar = styled.div`
-  width: 761px;
-  height: 65px;
-  border: 1px solid #717171;
-  border-radius: 10px;
-  margin: 0 auto;
-  margin-bottom: 50px;
+
+const SearchBarWrapper = styled.div`
+  margin-bottom: 65px;
 `;
+
 const HotelCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
