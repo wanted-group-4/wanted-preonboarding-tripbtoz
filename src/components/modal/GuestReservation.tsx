@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 export default function GuestReservation() {
+  const [count, setCount] = useState({
+    adult: 2,
+    kid: 0,
+  });
+
+  const handleCountMinus = e => {
+    e.stopPropagation();
+    const { name } = e.target;
+    setCount({ ...count, [name]: count[name] - 1 });
+    if (count[name] <= 0) {
+      setCount({ ...count, [name]: 0 });
+    }
+  };
+
+  const handleCountPlus = e => {
+    e.stopPropagation();
+    const { name } = e.target;
+    setCount({ ...count, [name]: count[name] + 1 });
+  };
+
+  const confirmation = e => {
+    console.log('적용');
+  };
+
+  const initialization = e => {
+    e.stopPropagation();
+    setCount(() => ({ adult: 2, kid: 0 }));
+  };
+
   return (
     <>
       <Container>
@@ -9,23 +38,33 @@ export default function GuestReservation() {
           <FirstSection>
             <AgeGroup>성인</AgeGroup>
             <CountBox>
-              <Count>-</Count>
-              <Number> 2명 </Number>
-              <Count>+</Count>
+              <Count name="adult" onClick={handleCountMinus}>
+                -
+              </Count>
+              <Number> {count.adult}명 </Number>
+              <Count name="adult" onClick={handleCountPlus}>
+                +
+              </Count>
             </CountBox>
           </FirstSection>
           <SecondSection>
             <AgeGroup>어린이</AgeGroup>
             <Age>(0 ~ 17세)</Age>
             <CountBox>
-              <Count>-</Count>
-              <Number> 0명 </Number>
-              <Count>+</Count>
+              <Count name="kid" onClick={handleCountMinus}>
+                -
+              </Count>
+              <Number> {count.kid}명 </Number>
+              <Count name="kid" onClick={handleCountPlus}>
+                +
+              </Count>
             </CountBox>
           </SecondSection>
           <ThirdSection>
-            <Button>초기화</Button>
-            <Button Apply>적용</Button>
+            <Button onClick={initialization}>초기화</Button>
+            <Button Apply onClick={confirmation}>
+              적용
+            </Button>
           </ThirdSection>
         </SectionBox>
       </Container>
@@ -38,6 +77,8 @@ const Container = styled.div`
   border-radius: 5px;
   background: #ffffff;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  z-index: 100;
 `;
 const SectionBox = styled.div`
   position: relative;
