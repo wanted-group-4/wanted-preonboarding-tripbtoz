@@ -1,19 +1,19 @@
 {
-    "compilerOptions": {
-      "baseUrl": "./",
-      "paths": {
-        "@src/*": ["src/*"],
-        "@routes/*": ["src/routes/*"],
-        "@api/*": ["src/api/*"],
-        "@components/*": ["src/components/*"],
-        "@constants/*": ["src/constants/*"],
-        "@assets/*": ["src/assets/*"],
-        "@pages/*": ["src/pages/*"],
-        "@styles/*": ["src/styles/*"],
-        "@type/*": ["src/types/*"],
-        "@utils/*": ["src/utils/*"],
-        "@hooks/*": ["src/hooks/*"]
-      }
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@routes/*": ["src/routes/*"],
+      "@api/*": ["src/api/*"],
+      "@components/*": ["src/components/*"],
+      "@wrappers/*": ["src/components/wrappers/*"],
+      "@constants/*": ["src/constants/*"],
+      "@assets/*": ["src/assets/*"],
+      "@pages/*": ["src/pages/*"],
+      "@styles/*": ["src/styles/*"],
+      "@type/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   }
-  
+}
