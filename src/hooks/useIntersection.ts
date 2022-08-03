@@ -10,7 +10,7 @@ interface Props {
 function useIntersection({
   root,
   rootMargin = '0px',
-  threshold = 0,
+  threshold = 1,
   onIntersect,
 }: Props) {
   const [target, setTarget] = useState<HTMLElement | null | undefined>(null);
@@ -22,6 +22,7 @@ function useIntersection({
       onIntersect,
       { root, rootMargin, threshold },
     );
+    observer.disconnect();
     observer.observe(target);
 
     return () => observer.unobserve(target);
