@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import SearchDate from '@components/search/SearchDate';
 import SearchCount from '@components/search/SearchCount';
 import useWindowDimensions from '@hooks/useWindowDimensions';
-import theme from '@src/styles/theme';
+import theme from '@styles/theme';
 
 function SearchBar() {
   const { width } = useWindowDimensions();
@@ -27,18 +27,18 @@ function SearchBar() {
 export default SearchBar;
 
 const SearchBarContainer = styled.div`
-  margin: 24px auto;
+  margin: auto;
   display: flex;
   align-items: center;
   border: 1px solid ${({ theme }) => theme.color.grey_03};
   border-radius: 4px;
   @media ${({ theme }) => theme.deviceSize.tablet} {
-    width: 88vw;
+    width: 100%;
     display: block;
     border: none;
   }
   @media ${({ theme }) => theme.deviceSize.mobile} {
-    min-width: 360px;
+    min-width: 300px; // temp
     display: block;
     border: none;
   }

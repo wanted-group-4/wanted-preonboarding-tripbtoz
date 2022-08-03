@@ -2,21 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 
-import Week from '@components/calendar/Week';
-import Dates from '@components/calendar/Dates';
+import { Week, Dates } from '@components/calendar';
 
 interface IMonthProps {
   checkRef: React.MutableRefObject<{
     [key: string]: string;
   }>;
   dateRef: React.MutableRefObject<{
-    [key: string]: HTMLDivElement | null;
+    [key: string]: HTMLDivElement;
   }>;
   year: number;
   month: number;
+  page: number;
 }
 
-function Month({ checkRef, dateRef, year, month }: IMonthProps) {
+function Month({ checkRef, dateRef, year, month, page }: IMonthProps) {
   const monthTitle = format(new Date(year, month), 'yyyy.MM');
 
   const handleDate = (e: any) => {
@@ -60,7 +60,7 @@ function Month({ checkRef, dateRef, year, month }: IMonthProps) {
   };
 
   return (
-    <MonthContainer onClick={handleDate}>
+    <MonthContainer onClick={handleDate} page={page} month={month}>
       <Title>{monthTitle}</Title>
       <Week />
       <Dates year={year} month={month} dateRef={dateRef} />
@@ -70,11 +70,25 @@ function Month({ checkRef, dateRef, year, month }: IMonthProps) {
 
 export default Month;
 
-const MonthContainer = styled.div`
-  width: 60vw;
+const MonthContainer = styled.div<{ page: number; month: number }>`
+  margin-right: 30px;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    margin-right: 0;
+  }
+  @media (min-width: 820px) {
+    order: ${({ page, month }) => {
+      if (page === month) return 1;
+      if (page + 1 === month) return 2;
+      return 3;
+    }};
+  }
 `;
 const Title = styled.div`
-  margin: 4.5vw 0;
-  font-size: 2.5vw;
+  margin-bottom: 30px;
+  font-size: 17px;
   font-weight: 700;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    font-size: 4.5vw;
+    margin: 7vw 0 9.5vw;
+  }
 `;

@@ -6,8 +6,8 @@ import { AiOutlineCalendar } from 'react-icons/ai';
 import IconWrapper from '@components/wrappers/IconWrapper';
 import BarWrapper from '@components/wrappers/BarWrapper';
 import KeyWordContainer from '@src/components/common/KeyWordContainer';
-import { IStyledProps } from '@type/style';
 import { ISearchInnerProps } from '@type/search';
+import { CalendarModal } from '@components/calendar';
 
 function SearchDate({ isWeb }: ISearchInnerProps) {
   const [display, setDisplay] = useState(false);
@@ -63,11 +63,7 @@ function SearchDate({ isWeb }: ISearchInnerProps) {
         )}
         <KeyWordContainer content="체크아웃 :" color="grey_03" />
         <KeyWordContainer content={checkout} />
-        {display && (
-          <TempCalender height="64px" onClick={handleSubmit}>
-            캘린더 컴포넌트입니다.
-          </TempCalender>
-        )}
+        <CalendarModal display={display} />
       </BarWrapper>
     </SearchDateContainer>
   );
@@ -90,14 +86,4 @@ const SearchDateContainer = styled.div`
   @media ${({ theme }) => theme.deviceSize.mobile} {
     padding: 0 12px;
   }
-`;
-
-const TempCalender = styled.div<IStyledProps>`
-  margin-top: 12px;
-  width: ${({ theme }) => theme.size.tablet}; // 수정
-  height: 400px;
-  position: absolute;
-  top: ${props => props?.height};
-  left: 0;
-  background-color: ${({ theme }) => theme.color.grey_01};
 `;
