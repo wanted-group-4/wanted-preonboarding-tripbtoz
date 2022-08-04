@@ -98,51 +98,51 @@ export default function GuestReservation({
     </>
   );
 }
-// const Background = styled.div<{ isOpenModal: boolean }>`
-//   display: ${({ isOpenModal }) => (isOpenModal ? 'block' : 'none')};
-//   position: absolute;
-//   z-index: 100;
-//   width: 100%;
-//   height: 100%;
-//   top: 0;
-//   left: 0;
-// `;
-// const Container = styled.div`
-//   position: absolute;
-//   width: 319px;
-//   height: 190px;
-//   border-radius: 5px;
-//   background: #ffffff;
-//   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
-//   z-index: 100;
-//   left: 54.7%;
-//   top: 205px;
-//   @media screen and (max-width: 1660px) {
-//     left: 56%;
-//   }
-//   @media screen and (max-width: 1374px) {
-//     left: 57.3%;
-//   }
-//   @media screen and (max-width: 1125px) {
-//     left: 58.8%;
-//   }
-//   @media screen and (max-width: 928px) {
-//     left: 60.4%;
-//   }
-//   @media ${({ theme }) => theme.deviceSize.tablet} {
-//     top: 280px;
-//     left: 57.8%;
-//   }
-//   @media ${({ theme }) => theme.deviceSize.middle} {
-//     width: 100vw;
-//     height: 100vh;
-//     position: fixed;
-//     top: 0;
-//     left: 0;
-//     bottom: 0;
-//     right: 0;
-//   }
-// `;
+const Background = styled.div<{ isOpenModal: boolean }>`
+  display: ${({ isOpenModal }) => (isOpenModal ? 'block' : 'none')};
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+`;
+const Container = styled.div`
+  position: absolute;
+  width: 319px;
+  height: 190px;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+  left: 54.7%;
+  top: 205px;
+  @media screen and (max-width: 1660px) {
+    left: 56%;
+  }
+  @media screen and (max-width: 1374px) {
+    left: 57.3%;
+  }
+  @media screen and (max-width: 1125px) {
+    left: 58.8%;
+  }
+  @media screen and (max-width: 928px) {
+    left: 60.4%;
+  }
+  @media ${({ theme }) => theme.deviceSize.tablet} {
+    top: 280px;
+    left: 57.8%;
+  }
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+`;
 
 const SectionBox = styled.div`
   position: relative;
