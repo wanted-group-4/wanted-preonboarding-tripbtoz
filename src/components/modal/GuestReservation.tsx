@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import MobileHeader from '@components/modal/MobileHeader';
 
 export default function GuestReservation() {
   const [count, setCount] = useState({
@@ -34,6 +35,7 @@ export default function GuestReservation() {
   return (
     <>
       <Container>
+        <MobileHeader />
         <SectionBox>
           <FirstSection>
             <AgeGroup>성인</AgeGroup>
@@ -79,10 +81,25 @@ const Container = styled.div`
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
   position: absolute;
   z-index: 100;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 50;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
 `;
+
 const SectionBox = styled.div`
   position: relative;
   padding: 17px;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    width: 100vw;
+    height: 100vh;
+    border-top: 1px solid #d9d9d9;
+  }
 `;
 const FirstSection = styled.div`
   display: flex;
@@ -90,12 +107,18 @@ const FirstSection = styled.div`
   align-items: center;
   height: 55px;
 `;
-const AgeGroup = styled.div``;
+const AgeGroup = styled.div`
+  width: 50px;
+`;
 const Age = styled.div`
   color: ${({ theme }) => theme.color.grey_03};
   position: relative;
   left: -35px;
   font-size: 12px;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    flex: 1 1 auto;
+    left: 0;
+  }
 `;
 const CountBox = styled.div`
   border: 1px solid #d9d9d9;
@@ -126,6 +149,10 @@ const ThirdSection = styled.div`
   justify-content: center;
   align-items: center;
   height: 50px;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    margin-top: 70vh;
+    border-top: 1px solid #d9d9d9;
+  }
 `;
 const Button = styled.button<{ Apply?: any }>`
   width: 140px;
@@ -137,4 +164,10 @@ const Button = styled.button<{ Apply?: any }>`
   font-size: 13px;
   color: ${props => (props.Apply ? '#FFFFFF' : '#000000')};
   margin-left: ${props => (props.Apply ? '10px' : '')};
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    margin-top: 50px;
+    width: 300px;
+    height: 60px;
+    font-size: 22px;
+  }
 `;
