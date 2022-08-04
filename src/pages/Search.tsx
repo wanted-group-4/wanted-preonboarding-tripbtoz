@@ -95,7 +95,7 @@ const LastViewSection = styled.div`
   padding: 100px;
   height: 50px;
   border: 1px solid red;
-  color: #ff375c;
+  color: ${({ theme }) => theme.color.lightRed};
   text-align: center;
 `;
 
