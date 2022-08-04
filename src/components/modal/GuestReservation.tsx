@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import MobileHeader from '@components/modal/MobileHeader';
 
-export default function GuestReservation() {
-  const [count, setCount] = useState({
-    adult: 2,
-    kid: 0,
-  });
-
+export default function GuestReservation({ count, setCount }: any) {
   const handleCountMinus = e => {
     e.stopPropagation();
     const { name } = e.target;
@@ -25,6 +20,7 @@ export default function GuestReservation() {
 
   const confirmation = e => {
     console.log('적용');
+    document.body.style.overflow = 'unset';
   };
 
   const initialization = e => {
@@ -62,13 +58,13 @@ export default function GuestReservation() {
               </Count>
             </CountBox>
           </SecondSection>
-          <ThirdSection>
-            <Button onClick={initialization}>초기화</Button>
-            <Button Apply onClick={confirmation}>
-              적용
-            </Button>
-          </ThirdSection>
         </SectionBox>
+        <ButtonBox>
+          <Button onClick={initialization}>초기화</Button>
+          <Button Apply onClick={confirmation}>
+            적용
+          </Button>
+        </ButtonBox>
       </Container>
     </>
   );
@@ -85,7 +81,7 @@ const Container = styled.div`
     width: 100vw;
     height: 100vh;
     position: fixed;
-    top: 50;
+    top: 0;
     left: 0;
     bottom: 0;
     right: 0;
@@ -94,10 +90,11 @@ const Container = styled.div`
 
 const SectionBox = styled.div`
   position: relative;
+  top: 17px;
   padding: 17px;
   @media ${({ theme }) => theme.deviceSize.middle} {
     width: 100vw;
-    height: 100vh;
+    height: 60vh;
     border-top: 1px solid #d9d9d9;
   }
 `;
@@ -106,6 +103,7 @@ const FirstSection = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 55px;
+  margin-bottom: 10px;
 `;
 const AgeGroup = styled.div`
   width: 50px;
@@ -144,30 +142,30 @@ const SecondSection = styled.div`
   height: 55px;
 `;
 
-const ThirdSection = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
+const ButtonBox = styled.div`
+  display: none;
   @media ${({ theme }) => theme.deviceSize.middle} {
-    margin-top: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
     border-top: 1px solid #d9d9d9;
+    height: 19vw;
+    width: 100%;
+    padding: 10px;
   }
 `;
 const Button = styled.button<{ Apply?: any }>`
-  width: 140px;
-  height: 35px;
+  width: 300px;
+  height: 11vw;
   background: ${props => (props.Apply ? '#FF375C' : '#FFFFFF')};
   border: 1px solid #d9d9d9;
-  border-radius: 5px;
   font-weight: 700;
   font-size: 13px;
   color: ${props => (props.Apply ? '#FFFFFF' : '#000000')};
-  margin-left: ${props => (props.Apply ? '10px' : '')};
-  @media ${({ theme }) => theme.deviceSize.middle} {
-    margin-top: 50px;
-    width: 300px;
-    height: 60px;
-    font-size: 22px;
-  }
+  margin-left: ${props => (props.Apply ? '20px' : '')};
+  width: 300px;
+  height: 11vw;
+  font-size: 5vw;
+  border-radius: 5px;
 `;
