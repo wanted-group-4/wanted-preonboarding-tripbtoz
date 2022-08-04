@@ -1,92 +1,148 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import MobileHeader from '@components/modal/MobileHeader';
+import { ISearchData } from '@type/search';
+interface ICalendarModal {
+  isOpenModal: { [key: string]: boolean };
+  handleModal: (key: string, value: boolean) => void;
+  searchData: ISearchData;
+  setSearchData: React.Dispatch<React.SetStateAction<ISearchData>>;
+}
 
-export default function GuestReservation({ count, setCount }: any) {
+export default function GuestReservation({
+  isOpenModal,
+  handleModal,
+  searchData,
+  setSearchData,
+}: ICalendarModal) {
+  const { adult, kid } = searchData.occupancy;
+
   const handleCountMinus = e => {
-    e.stopPropagation();
     const { name } = e.target;
-    setCount({ ...count, [name]: count[name] - 1 });
-    if (count[name] <= 0) {
-      setCount({ ...count, [name]: 0 });
-    }
+    if (searchData.occupancy[name] <= 0) return;
+    setSearchData({
+      ...searchData,
+      occupancy: {
+        ...searchData.occupancy,
+        [name]: searchData.occupancy[name] - 1,
+      },
+    });
   };
 
   const handleCountPlus = e => {
-    e.stopPropagation();
     const { name } = e.target;
-    setCount({ ...count, [name]: count[name] + 1 });
+    setSearchData({
+      ...searchData,
+      occupancy: {
+        ...searchData.occupancy,
+        [name]: searchData.occupancy[name] + 1,
+      },
+    });
   };
 
-  const confirmation = e => {
-    console.log('적용');
-    document.body.style.overflow = 'unset';
+  const initialization = () => {
+    setSearchData({
+      ...searchData,
+      occupancy: { adult: 0, kid: 0 },
+    });
   };
 
-  const initialization = e => {
-    e.stopPropagation();
-    setCount(() => ({ adult: 2, kid: 0 }));
+  const handlefocusOut = e => {
+    if (e.target.id === 'background') handleModal('focus', false);
   };
 
   return (
     <>
-      <Container>
-        <MobileHeader />
-        <SectionBox>
-          <FirstSection>
-            <AgeGroup>성인</AgeGroup>
-            <CountBox>
-              <Count name="adult" onClick={handleCountMinus}>
-                -
-              </Count>
-              <Number> {count.adult}명 </Number>
-              <Count name="adult" onClick={handleCountPlus}>
-                +
-              </Count>
-            </CountBox>
-          </FirstSection>
-          <SecondSection>
-            <AgeGroup>어린이</AgeGroup>
-            <Age>(0 ~ 17세)</Age>
-            <CountBox>
-              <Count name="kid" onClick={handleCountMinus}>
-                -
-              </Count>
-              <Number> {count.kid}명 </Number>
-              <Count name="kid" onClick={handleCountPlus}>
-                +
-              </Count>
-            </CountBox>
-          </SecondSection>
-        </SectionBox>
-        <ButtonBox>
-          <Button onClick={initialization}>초기화</Button>
-          <Button Apply onClick={confirmation}>
-            적용
-          </Button>
-        </ButtonBox>
-      </Container>
+      <Background
+        id="background"
+        isOpenModal={isOpenModal.occupancy}
+        onClick={handlefocusOut}
+      >
+        <Container>
+          <MobileHeader handleModal={handleModal} />
+          <SectionBox>
+            <FirstSection>
+              <AgeGroup>성인</AgeGroup>
+              <CountBox>
+                <Count name="adult" onClick={handleCountMinus}>
+                  -
+                </Count>
+                <Number> {adult}명 </Number>
+                <Count name="adult" onClick={handleCountPlus}>
+                  +
+                </Count>
+              </CountBox>
+            </FirstSection>
+            <SecondSection>
+              <AgeGroup>어린이</AgeGroup>
+              <Age>(0 ~ 17세)</Age>
+              <CountBox>
+                <Count name="kid" onClick={handleCountMinus}>
+                  -
+                </Count>
+                <Number> {kid}명 </Number>
+                <Count name="kid" onClick={handleCountPlus}>
+                  +
+                </Count>
+              </CountBox>
+            </SecondSection>
+          </SectionBox>
+          <ButtonBox>
+            <Button onClick={initialization}>초기화</Button>
+            <Button Apply onClick={() => handleModal('occupancy', false)}>
+              적용
+            </Button>
+          </ButtonBox>
+        </Container>
+      </Background>
     </>
   );
 }
-const Container = styled.div`
-  width: 319px;
-  height: 190px;
-  border-radius: 5px;
-  background: #ffffff;
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
-  position: absolute;
-  z-index: 100;
-  @media ${({ theme }) => theme.deviceSize.middle} {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-  }
-`;
+// const Background = styled.div<{ isOpenModal: boolean }>`
+//   display: ${({ isOpenModal }) => (isOpenModal ? 'block' : 'none')};
+//   position: absolute;
+//   z-index: 100;
+//   width: 100%;
+//   height: 100%;
+//   top: 0;
+//   left: 0;
+// `;
+// const Container = styled.div`
+//   position: absolute;
+//   width: 319px;
+//   height: 190px;
+//   border-radius: 5px;
+//   background: #ffffff;
+//   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+//   z-index: 100;
+//   left: 54.7%;
+//   top: 205px;
+//   @media screen and (max-width: 1660px) {
+//     left: 56%;
+//   }
+//   @media screen and (max-width: 1374px) {
+//     left: 57.3%;
+//   }
+//   @media screen and (max-width: 1125px) {
+//     left: 58.8%;
+//   }
+//   @media screen and (max-width: 928px) {
+//     left: 60.4%;
+//   }
+//   @media ${({ theme }) => theme.deviceSize.tablet} {
+//     top: 280px;
+//     left: 57.8%;
+//   }
+//   @media ${({ theme }) => theme.deviceSize.middle} {
+//     width: 100vw;
+//     height: 100vh;
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     bottom: 0;
+//     right: 0;
+//   }
+// `;
 
 const SectionBox = styled.div`
   position: relative;
