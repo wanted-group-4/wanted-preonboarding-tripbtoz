@@ -1,21 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 
-function MobileHeader() {
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-  }, []);
+interface ICalendarHeaderProps {
+  handleModal: (key: string, value: boolean) => void;
+}
 
-  const exit = () => {
-    document.body.style.overflow = 'unset';
-  };
+function MobileHeader({ handleModal }: ICalendarHeaderProps) {
   return (
     <Container>
       <Text>인원 및 객실</Text>
-      <CloseIconDiv onClick={exit}>
+      <CloseIconButton onClick={() => handleModal('occupancy', false)}>
         <Icon />
-      </CloseIconDiv>
+      </CloseIconButton>
     </Container>
   );
 }
@@ -38,7 +35,7 @@ const Container = styled.div`
 const Text = styled.div`
   text-align: center;
 `;
-const CloseIconDiv = styled.button`
+const CloseIconButton = styled.button`
   position: absolute;
   right: 6vw;
   background: transparent;
