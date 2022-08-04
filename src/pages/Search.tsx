@@ -88,6 +88,7 @@ const HotelCardWrapper = styled.div`
   margin: 0 auto;
   gap: 15px;
   height: 100%;
+  width: 612px;
 `;
 
 const LastViewSection = styled.div`
