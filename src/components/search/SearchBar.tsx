@@ -7,6 +7,7 @@ import useWindowDimensions from '@hooks/useWindowDimensions';
 import theme from '@styles/theme';
 import { CalendarModal } from '@components/calendar';
 import { ISearchData } from '@type/search';
+import GuestReservation from '../modal/GuestReservation';
 
 function SearchBar() {
   const { width } = useWindowDimensions();
@@ -62,6 +63,12 @@ function SearchBar() {
         isWeb={isWebWidth}
         handleModal={handleModal}
         searchData={searchData}
+      />
+      <GuestReservation
+        isOpenModal={isOpenModal}
+        handleModal={handleModal}
+        searchData={searchData}
+        setSearchData={setSearchData}
       />
     </SearchBarContainer>
   );
