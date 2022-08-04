@@ -2,41 +2,23 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineUser, AiOutlineSearch } from 'react-icons/ai';
 
-import IconWrapper from '@wrappers/IconWrapper';
-import BarWrapper from '@wrappers/BarWrapper';
+import IconWrapper from '@components/wrappers/IconWrapper';
+import BarWrapper from '@components/wrappers/BarWrapper';
 import KeyWordContainer from '@src/components/common/KeyWordContainer';
 import { IStyledProps } from '@type/style';
 import { ISearchInnerProps } from '@type/search';
 
-function SearchCount({ isWeb }: ISearchInnerProps) {
-  const [display, setDisplay] = useState(false);
-  const [count, setCount] = useState({ adult: 0, kid: 0 });
-
-  const openCounter = () => {
-    setDisplay(() => true);
-  };
-  const handleCount = () => {
-    // update state after button click
-    const [adult, kid] = [2, 2];
-    setCount(prev => ({ ...prev, adult, kid }));
-    setDisplay(() => false);
-  };
-
+function SearchCount({ isWeb, handleModal, searchData }: ISearchInnerProps) {
   return (
-    <SearchCountContainer onClick={openCounter}>
+    <SearchCountContainer onClick={() => handleModal('occupancy', true)}>
       <BarWrapper height="64px">
         <IconWrapper icon={<AiOutlineUser />} />
         <KeyWordContainer content="성인 :" color="grey_03" />
-        <KeyWordContainer content={`${count.adult}명`} />
+        <KeyWordContainer content={`${searchData.occupancy.adult}명`} />
         <KeyWordContainer content="|" color="grey_03" />
         <KeyWordContainer content="어린이 :" color="grey_03" />
-        <KeyWordContainer content={`${count.kid}명`} />
+        <KeyWordContainer content={`${searchData.occupancy.kid}명`} />
         {isWeb && <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />}
-        {display && (
-          <TempCounter height="64px" onClick={handleCount}>
-            인원수 세기
-          </TempCounter>
-        )}
       </BarWrapper>
     </SearchCountContainer>
   );

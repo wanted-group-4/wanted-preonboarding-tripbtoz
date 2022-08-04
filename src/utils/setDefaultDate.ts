@@ -1,25 +1,28 @@
+import { ISearchData } from '@type/search';
 import { add, format } from 'date-fns';
 
 const setDefaultDate = (
   dateRef: React.MutableRefObject<{
     [key: string]: HTMLDivElement | null;
   }>,
-  checkRef: React.MutableRefObject<{
-    [key: string]: string;
-  }>,
+  searchData: ISearchData,
 ) => {
-  const today = format(add(new Date(), { days: 7 }), 'yyyyMMdd');
-  const next = format(add(new Date(), { days: 8 }), 'yyyyMMdd');
+  const date = new Date();
 
-  for (let i = +today; i < +next; i++) {
+  const today = format(date, 'yyyyMMdd');
+  const start = format(add(date, { days: 7 }), 'yyyyMMdd');
+  const end = format(add(date, { days: 8 }), 'yyyyMMdd');
+
+  for (let i = +start; i < +end; i++) {
     dateRef.current[String(i)]?.classList.add('selected');
   }
 
-  dateRef.current[today]?.classList.add('start');
-  dateRef.current[next]?.classList.add('end');
+  dateRef.current[today]?.classList.add('today');
+  dateRef.current[start]?.classList.add('start');
+  dateRef.current[end]?.classList.add('end');
 
-  checkRef.current.checkIn = today;
-  checkRef.current.checkOut = next;
+  searchData.calendar.checkIn = format(add(date, { days: 7 }), 'yyyy-MM-dd');
+  searchData.calendar.checkOut = format(add(date, { days: 8 }), 'yyyy-MM-dd');
 };
 
 export default setDefaultDate;
