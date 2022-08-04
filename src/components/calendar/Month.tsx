@@ -3,31 +3,41 @@ import styled from 'styled-components';
 import { format } from 'date-fns';
 
 import { Week, Dates } from '@components/calendar';
+import { ISearchData } from '@type/search';
 
 interface IMonthProps {
-  checkRef: React.MutableRefObject<{
-    [key: string]: string;
-  }>;
   dateRef: React.MutableRefObject<{
     [key: string]: HTMLDivElement;
   }>;
+  handleModal: (key: string, value: boolean) => void;
+  setSearchData: React.Dispatch<React.SetStateAction<ISearchData>>;
+  searchData: ISearchData;
   year: number;
   month: number;
   page: number;
 }
 
-function Month({ checkRef, dateRef, year, month, page }: IMonthProps) {
+function Month({
+  dateRef,
+  handleModal,
+  setSearchData,
+  searchData,
+  year,
+  month,
+  page,
+}: IMonthProps) {
   const monthTitle = format(new Date(year, month), 'yyyy.MM');
 
   const handleDate = (e: any) => {
     if (e.target.nodeName === 'DIV') return;
 
     const target = e.target;
-    const start = checkRef.current.checkIn;
-    const end = checkRef.current.checkOut;
+    const start = searchData.calendar.checkIn.replace(/-/g, '');
+    const end = searchData.calendar.checkOut.replace(/-/g, '');
 
     const [year, month] = e.currentTarget.childNodes[0].innerHTML.split('.');
     const day = e.target.innerHTML;
+    const value = format(new Date(year, month - 1, day), 'yyyy-MM-dd');
     const current = format(new Date(year, month - 1, day), 'yyyyMMdd');
 
     if (end !== '') {
@@ -41,7 +51,10 @@ function Month({ checkRef, dateRef, year, month, page }: IMonthProps) {
         ),
       );
       target.parentElement.classList.add('start_only');
-      checkRef.current = { checkIn: `${current}`, checkOut: '' };
+      setSearchData(() => ({
+        ...searchData,
+        calendar: { checkIn: value, checkOut: '' },
+      }));
     }
     if (current > start && end === '') {
       for (let i = +start; i < +current; i++) {
@@ -50,12 +63,19 @@ function Month({ checkRef, dateRef, year, month, page }: IMonthProps) {
       dateRef.current[start]?.classList.remove('start_only');
       dateRef.current[start]?.classList.add('start');
       dateRef.current[current]?.classList.add('end');
-      checkRef.current.checkOut = current;
+      setSearchData(() => ({
+        ...searchData,
+        calendar: { checkIn: searchData.calendar.checkIn, checkOut: value },
+      }));
+      handleModal('next', false);
     }
     if (current < start) {
       dateRef.current[start]?.classList.remove('start_only');
       dateRef.current[current]?.classList.add('start_only');
-      checkRef.current = { checkIn: `${current}`, checkOut: '' };
+      setSearchData(() => ({
+        ...searchData,
+        calendar: { checkIn: value, checkOut: '' },
+      }));
     }
   };
 

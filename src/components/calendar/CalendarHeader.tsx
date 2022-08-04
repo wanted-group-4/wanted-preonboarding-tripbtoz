@@ -2,11 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 
-function CalendarHeader() {
+interface ICalendarHeaderProps {
+  handleModal: (key: string, value: boolean) => void;
+}
+
+function CalendarHeader({ handleModal }: ICalendarHeaderProps) {
   return (
     <MobileCalendarHeaderContainer>
       <Title>일정 선택</Title>
-      <CloseButton>
+      <CloseButton onClick={() => handleModal('calendar', false)}>
         <CloseIcon />
       </CloseButton>
     </MobileCalendarHeaderContainer>

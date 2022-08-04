@@ -1,59 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { format, differenceInDays } from 'date-fns';
+import { differenceInDays } from 'date-fns';
 import { AiOutlineCalendar } from 'react-icons/ai';
 
 import IconWrapper from '@components/wrappers/IconWrapper';
 import BarWrapper from '@components/wrappers/BarWrapper';
-import KeyWordContainer from '@src/components/common/KeyWordContainer';
+import KeyWordContainer from '@components/common/KeyWordContainer';
 import { ISearchInnerProps } from '@type/search';
-import { CalendarModal } from '@components/calendar';
 
-function SearchDate({ isWeb }: ISearchInnerProps) {
-  const [display, setDisplay] = useState(false);
-  const [checkin, setCheckin] = useState('8월 1일'); // temp
-  const [checkout, setCheckout] = useState('8월 2일'); // temp
-  const [diff, setDiff] = useState(1); // default value 확인
+function SearchDate({ isWeb, handleModal, searchData }: ISearchInnerProps) {
+  const handleDateDiff = (period: { [key: string]: string | number }) => {
+    const { checkIn, checkOut } = period;
+    const start = new Date(checkIn);
+    const end = new Date(checkOut);
+    const diff = differenceInDays(end, start);
+    return isNaN(diff) ? 1 : diff;
+  };
 
-  const formatStringToDate = (date: string) => {
-    const [year, month, day] = [
-      +date.substring(0, 4),
-      +date.substring(4, 6),
-      +date.substring(6),
-    ];
-    return new Date(year, month, day);
-  };
-  const openCalendar = () => {
-    setDisplay(() => true);
-  };
-  const handleCheckin = (date: Date) => {
-    const newDate = format(date, 'M월 d일');
-    setCheckin(() => newDate);
-  };
-  const handleCheckout = (date: Date) => {
-    const newDate = format(date, 'M월 d일');
-    setCheckout(() => newDate);
-  };
-  const handleDateDiff = (startDate: Date, endDate: Date) => {
-    const diff = differenceInDays(startDate, endDate);
-    setDiff(() => diff);
-  };
-  const handleSubmit = event => {
-    event.preventDefault();
-    const checkinDate = formatStringToDate('20220720');
-    const checkoutDate = formatStringToDate('20220801');
-    handleCheckin(checkinDate); // temp
-    handleCheckout(checkoutDate); // temp
-    handleDateDiff(checkoutDate, checkinDate);
-    setDisplay(() => false);
+  const diff = handleDateDiff(searchData.calendar);
+
+  const changeFormat = (value: string) => {
+    if (value === '') return '날짜입력';
+    const [yaer, month, day] = value.split('-');
+    return `${month}월 ${day}일`;
   };
 
   return (
-    <SearchDateContainer onClick={openCalendar}>
+    <SearchDateContainer onClick={() => handleModal('calendar', true)}>
       <BarWrapper height="64px">
         <IconWrapper icon={<AiOutlineCalendar />} />
         <KeyWordContainer content="체크인 :" color="grey_03" />
-        <KeyWordContainer content={checkin} />
+        <KeyWordContainer content={changeFormat(searchData.calendar.checkIn)} />
         <KeyWordContainer content="|" color="grey_03" />
         {isWeb && (
           <>
@@ -62,8 +39,9 @@ function SearchDate({ isWeb }: ISearchInnerProps) {
           </>
         )}
         <KeyWordContainer content="체크아웃 :" color="grey_03" />
-        <KeyWordContainer content={checkout} />
-        <CalendarModal display={display} />
+        <KeyWordContainer
+          content={changeFormat(searchData.calendar.checkOut)}
+        />
       </BarWrapper>
     </SearchDateContainer>
   );

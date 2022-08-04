@@ -5,21 +5,28 @@ import { yearArray } from '@constants/day';
 import { Month } from '@components/calendar';
 import setDefaultDate from '@utils/setDefaultDate';
 import disabledDate from '@utils/disabledDate';
+import getDate from '@utils/getDate';
+import { ISearchData } from '@type/search';
 
 interface ICalendarProps {
   page: number;
+  searchData: ISearchData;
+  handleModal: (key: string, value: boolean) => void;
+  setSearchData: React.Dispatch<React.SetStateAction<ISearchData>>;
 }
 
-function Calendar({ page }: ICalendarProps) {
-  const checkRef = useRef<{ [key: string]: string }>({});
+function Calendar({
+  page,
+  handleModal,
+  searchData,
+  setSearchData,
+}: ICalendarProps) {
   const dateRef = useRef<{ [key: string]: HTMLDivElement }>({});
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
+  const { year, month } = getDate();
 
   useEffect(() => {
-    setDefaultDate(dateRef, checkRef);
+    setDefaultDate(dateRef, searchData);
     disabledDate(dateRef);
   }, []);
 
@@ -30,8 +37,10 @@ function Calendar({ page }: ICalendarProps) {
           <Month
             key={index}
             page={page}
-            checkRef={checkRef}
             dateRef={dateRef}
+            handleModal={handleModal}
+            searchData={searchData}
+            setSearchData={setSearchData}
             year={year}
             month={month + index}
           />
