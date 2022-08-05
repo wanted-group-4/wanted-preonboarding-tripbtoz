@@ -7002,55 +7002,5 @@
     }
   ],
   "reserved": [
-    {
-      "name": "알다프와 빌라스",
-      "check_in": "2022-08-13",
-      "check_out": "2022-08-14",
-      "occupancy": {
-        "adult": 2,
-        "kid": 2
-      },
-      "id": 1
-    },
-    {
-      "name": "알다프와 빌라스",
-      "check_in": "2022-08-13",
-      "check_out": "2022-08-14",
-      "occupancy": {
-        "adult": 2,
-        "kid": 2
-      },
-      "id": 2
-    },
-    {
-      "name": "알다프와 빌라스",
-      "check_in": "2022-08-13",
-      "check_out": "2022-08-14",
-      "occupancy": {
-        "adult": 2,
-        "kid": 2
-      },
-      "id": 3
-    },
-    {
-      "name": "알다프와 빌라스",
-      "check_in": "2022-08-13",
-      "check_out": "2022-08-14",
-      "occupancy": {
-        "adult": 2,
-        "kid": 2
-      },
-      "id": 4
-    },
-    {
-      "name": "Coastal Soul by Sea Scape Properties",
-      "check_in": "2022-08-13",
-      "check_out": "2022-08-14",
-      "occupancy": {
-        "adult": 2,
-        "kid": 2
-      },
-      "id": 5
-    }
   ]
 }
