@@ -93,11 +93,9 @@ function SearchBar() {
           {isWebWidth && <IconPosition />}
         </SearchWrap>
       </Position>
-      {isWebWidth && (
-        <SearchButtonWrapper onClick={handleSearch} pathname={pathname}>
-          <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
-        </SearchButtonWrapper>
-      )}
+      <SearchButtonWrapper onClick={handleSearch} pathname={pathname}>
+        <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
+      </SearchButtonWrapper>
       <CalendarModal
         isOpenModal={isOpenModal}
         searchData={searchData}
@@ -147,20 +145,23 @@ const SearchWrap = styled.div`
   border-radius: 4px;
   width: 870px;
   margin: 0 auto;
+  @media ${({ theme }) => theme.deviceSize.tablet} {
+    width: 100%;
+  }
   @media ${({ theme }) => theme.deviceSize.middle} {
     padding: 10px 0 20px;
-    width: 100%;
     display: block;
     border: none;
   }
   @media ${({ theme }) => theme.deviceSize.mobile} {
     min-width: 300px;
-    display: block;
-    border: none;
   }
 `;
 
-const SearchButtonWrapper = styled.button<{ pathname: string }>`
+const SearchButtonWrapper = styled.button<{
+  pathname: string;
+}>`
+  display: block;
   position: ${({ pathname }) => (pathname === '/' ? 'fixed' : 'absolute')};
   top: 113px;
   right: 50%;
@@ -169,6 +170,7 @@ const SearchButtonWrapper = styled.button<{ pathname: string }>`
   background-color: transparent;
   z-index: 110;
   @media ${({ theme }) => theme.deviceSize.tablet} {
+    display: none;
     right: 5px;
     transform: none;
   }
