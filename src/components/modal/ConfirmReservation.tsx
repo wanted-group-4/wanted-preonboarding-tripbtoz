@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function ConfirmReservation() {
+function ConfirmReservation() {
   return (
     <>
       <BackGround>
@@ -15,6 +15,8 @@ export default function ConfirmReservation() {
     </>
   );
 }
+export default ConfirmReservation;
+
 const BackGround = styled.div`
   position: fixed;
   top: 0;
