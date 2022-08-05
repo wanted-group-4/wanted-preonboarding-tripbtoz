@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { HotelCard, ReserveCard } from '@components/hotel';
+import useLocationString from '@hooks/useLocationString';
 
 const DetailImageSize = {
   desktop: { width: 240, height: 130 },
@@ -36,6 +37,17 @@ const initDummyData: DetailProps[] = [
 ];
 
 function Detail() {
+  const { checkIn, checkOut, adult, kid, hotelName } = useLocationString();
+
+  const handleReserve = (): void => {
+    if (!hotelName) return;
+
+    localStorage.setItem(
+      hotelName,
+      JSON.stringify({ checkIn, checkOut, adult, kid }),
+    );
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -47,7 +59,7 @@ function Detail() {
               max={hotel.occupancy.max}
               imageSize={DetailImageSize}
             />
-            <ReserveCard />
+            <ReserveCard handleReserve={handleReserve} />
           </Box>
         ))}
       </Wrapper>

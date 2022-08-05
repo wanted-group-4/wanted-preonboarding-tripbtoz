@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function ReserveCard() {
+type ReserveCardProps = {
+  handleReserve: () => void;
+};
+
+function ReserveCard({ handleReserve }: ReserveCardProps) {
   return (
     <Container>
       <BadgeBox>
@@ -24,7 +28,7 @@ function ReserveCard() {
             </Charge>
             <ExtraCharge>세금 및 수수료 불포함</ExtraCharge>
           </Price>
-          <ReserveButton>예약</ReserveButton>
+          <ReserveButton onClick={handleReserve}>예약</ReserveButton>
         </Info>
       </InfoBox>
     </Container>
