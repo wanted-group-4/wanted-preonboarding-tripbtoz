@@ -112,16 +112,19 @@ export default SearchBar;
 
 const SearchBarContainer = styled.div`
   margin: auto;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   border: 1px solid ${({ theme }) => theme.color.grey_03};
   border-radius: 4px;
   @media ${({ theme }) => theme.deviceSize.middle} {
+    padding: 0 8px;
     width: 100%;
     display: block;
     border: none;
   }
   @media ${({ theme }) => theme.deviceSize.mobile} {
+    padding: 0;
     min-width: 300px;
     display: block;
     border: none;
@@ -129,6 +132,8 @@ const SearchBarContainer = styled.div`
 `;
 
 const SearchButtonWrapper = styled.button`
+  position: relative;
   padding: 20px;
   background-color: transparent;
+  z-index: 110;
 `;
