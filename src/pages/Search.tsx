@@ -58,7 +58,7 @@ function Search() {
   const handleClick = (hotelName: string) => {
     navigateSearch('/detail', { ...locationQuery, hotelName });
   };
-  console.log(data);
+
   return (
     <Container>
       <SearchBar />
