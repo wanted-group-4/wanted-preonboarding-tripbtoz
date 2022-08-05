@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { HotelCard, ReserveCard } from '@components/hotel';
 import useLocationString from '@hooks/useLocationString';
 import { getHotelInformation } from '@api/searchApi';
+import { patchReserveHotel } from '@api/reserveApi';
 import HotelCardSkeleton from '@src/components/common/skeleton/HotelCardSkeleton';
 
 const SKELETON_COUNT = 2;
@@ -20,9 +21,26 @@ function Detail() {
 
   const { data, isLoading } = getHotelInformation(hotelName);
 
-  const handleReserve = (): void => {
+  const handleReserve = async (): Promise<void> => {
     if (!hotelName) return;
+    try {
+      await patchReserveHotel({
+        name: hotelName,
+        check_in: checkIn,
+        check_out: checkOut,
+        occupancy: {
+          adult: Number(adult),
+          kid: Number(kid),
+        },
+      });
+      setLocalStorage();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const setLocalStorage = () => {
+    if (!hotelName) return;
     localStorage.setItem(
       hotelName,
       JSON.stringify({ checkIn, checkOut, adult, kid }),
