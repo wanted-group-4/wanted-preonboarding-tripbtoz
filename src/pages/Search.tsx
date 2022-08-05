@@ -101,12 +101,14 @@ function Search() {
 
 export default Search;
 
-const Container = styled.div`
-  padding-top: 50px;
-`;
+const Container = styled.div``;
 
 const SearchBarWrapper = styled.div`
-  margin-bottom: 65px;
+  position: sticky;
+  top: 84px;
+  z-index: 100;
+  padding: 50px 0px 32px 0px;
+  background-color: white;
 `;
 
 const HotelCardSection = styled.div`
