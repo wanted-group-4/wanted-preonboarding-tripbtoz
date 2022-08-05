@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { HotelCard, ReserveCard } from '@components/hotel';
 import useLocationString from '@hooks/useLocationString';
@@ -6,6 +6,7 @@ import { getHotelInformation } from '@api/searchApi';
 import { patchReserveHotel } from '@api/reserveApi';
 import HotelCardSkeleton from '@src/components/common/skeleton/HotelCardSkeleton';
 import SearchBar from '@components/search/SearchBar';
+import ConfirmReservation from '@components/modal/ConfirmReservation';
 
 const SKELETON_COUNT = 2;
 
@@ -18,6 +19,9 @@ const DetailImageSize = {
 };
 
 function Detail() {
+  const [isConfirmReservation, setIsConfirmReservation] =
+    useState<boolean>(false);
+
   const { checkIn, checkOut, adult, kid, hotelName } = useLocationString();
 
   const { data, isLoading } = getHotelInformation(hotelName);
@@ -26,7 +30,7 @@ function Detail() {
   const handleReserve = () => {
     if (!hotelName) return;
     patchReserveHotelInfo.mutate({
-      hotelName: hotelName,
+      name: hotelName,
       check_in: checkIn,
       check_out: checkOut,
       occupancy: {
@@ -35,6 +39,11 @@ function Detail() {
       },
     });
     setLocalStorage();
+    setIsConfirmReservation(true);
+  };
+
+  const closeConfirmReservation = (): void => {
+    setIsConfirmReservation(false);
   };
 
   const setLocalStorage = () => {
@@ -46,37 +55,44 @@ function Detail() {
   };
 
   return (
-    <Container>
-      <SearchBar />
-      <Wrapper>
-        {!isLoading ? (
-          data &&
-          [data[0], data[0]].map((hotel, index) => (
-            <Box key={index}>
-              <HotelCard
-                name={hotel.hotel_name}
-                base={hotel.occupancy.base}
-                max={hotel.occupancy.max}
-                imageSize={DetailImageSize}
-              />
-              <ReserveCard handleReserve={handleReserve} />
-            </Box>
-          ))
-        ) : (
-          <HotelCardSkeletonWrap>
-            {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
-              <HotelCardSkeleton
-                key={index}
-                skeletonHeight={{
-                  desktop: 400,
-                  mobile: 400,
-                }}
-              />
-            ))}
-          </HotelCardSkeletonWrap>
+    <>
+      <Container>
+        <SearchBar />
+        <Wrapper>
+          {!isLoading ? (
+            data &&
+            [data[0], data[0]].map((hotel, index) => (
+              <Box key={index}>
+                <HotelCard
+                  name={hotel.hotel_name}
+                  base={hotel.occupancy.base}
+                  max={hotel.occupancy.max}
+                  imageSize={DetailImageSize}
+                />
+                <ReserveCard handleReserve={handleReserve} />
+              </Box>
+            ))
+          ) : (
+            <HotelCardSkeletonWrap>
+              {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
+                <HotelCardSkeleton
+                  key={index}
+                  skeletonHeight={{
+                    desktop: 400,
+                    mobile: 400,
+                  }}
+                />
+              ))}
+            </HotelCardSkeletonWrap>
+          )}
+        </Wrapper>
+        {isConfirmReservation && (
+          <ConfirmReservation
+            closeConfirmReservation={closeConfirmReservation}
+          />
         )}
-      </Wrapper>
-    </Container>
+      </Container>
+    </>
   );
 }
 

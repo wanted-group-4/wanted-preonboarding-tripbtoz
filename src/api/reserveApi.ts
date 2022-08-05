@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { BASE_URL } from '@api/index';
 
 interface PatchReserveHotelParams {
-  hotelName: string;
+  name: string;
   check_in: string;
   check_out: string;
   occupancy: { adult: number; kid: number };
@@ -12,14 +12,14 @@ interface PatchReserveHotelParams {
 
 export const patchReserveHotel = () => {
   const fetch = async ({
-    hotelName,
+    name,
     check_in,
     check_out,
     occupancy,
   }: PatchReserveHotelParams) => {
     try {
       await axios.post(`${BASE_URL}/reserved`, {
-        hotelName,
+        name,
         check_in,
         check_out,
         occupancy,
