@@ -54,8 +54,8 @@ function Detail() {
       <Wrapper>
         {!isLoading ? (
           data &&
-          [data[0], data[0]].map(hotel => (
-            <Box key={hotel.hotel_name}>
+          [data[0], data[0]].map((hotel, index) => (
+            <Box key={index}>
               <HotelCard
                 name={hotel.hotel_name}
                 base={hotel.occupancy.base}
