@@ -19,7 +19,6 @@ export default Layout;
 
 const LayoutContainer = styled.div`
   width: 900px;
-  padding: 25px 30px;
   margin: 0 auto;
   @media ${({ theme }) => theme.deviceSize.tablet} {
     width: 100%;
