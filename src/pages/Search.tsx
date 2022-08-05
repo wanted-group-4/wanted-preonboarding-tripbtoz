@@ -60,9 +60,7 @@ function Search() {
 
   return (
     <Container>
-      <SearchBarWrapper>
-        <SearchBar />
-      </SearchBarWrapper>
+      <SearchBar />
       <HotelCardSection>
         {data?.pages &&
           data.pages.map(page => {
@@ -101,26 +99,31 @@ function Search() {
 
 export default Search;
 
-const Container = styled.div``;
-
-const SearchBarWrapper = styled.div`
-  position: sticky;
-  top: 84px;
-  z-index: 100;
-  padding: 50px 0px 32px 0px;
-  background-color: white;
+const Container = styled.div`
+  @media ${({ theme }) => theme.deviceSize.tablet} {
+    padding: 0px 17px;
+  }
+  @media ${({ theme }) => theme.deviceSize.mobile} {
+    padding: 0px;
+  }
 `;
 
 const HotelCardSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 146px 0px;
   margin: 0 auto;
   gap: 15px;
   height: 100%;
   width: 612px;
   @media ${({ theme }) => theme.deviceSize.tablet} {
     width: 100%;
+    padding: 0 8px;
+  }
+  @media ${({ theme }) => theme.deviceSize.mobile} {
+    width: 100%;
+    padding: 0;
   }
 `;
 
