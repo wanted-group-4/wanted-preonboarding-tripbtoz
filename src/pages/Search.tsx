@@ -7,7 +7,6 @@ import { fetchHotels } from '@api/searchApi';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import HotelCardSkeleton from '@components/common/skeleton/HotelCardSkeleton';
 import useLocationString from '@hooks/useLocationString';
-import useNavigateSearch from '@hooks/useNavigateSearch';
 
 const SKELETON_COUNT = 10;
 
@@ -34,7 +33,6 @@ interface Hotel {
 
 function Search() {
   const locationQuery = useLocationString();
-  const navigateSearch = useNavigateSearch();
   const maxPerson = +locationQuery.adult + +locationQuery.kid;
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery(['projects', maxPerson], fetchHotels, {
@@ -56,7 +54,14 @@ function Search() {
   const { setTarget } = useIntersection({ onIntersect });
 
   const handleClick = (hotelName: string) => {
-    navigateSearch('/detail', { ...locationQuery, hotelName });
+    const params = {
+      ...locationQuery,
+      hotelName,
+    };
+    const queryString = Object.keys(params)
+      .map(key => key + '=' + params[key])
+      .join('&');
+    window.open(`/detail?${queryString}`, '_blank');
   };
 
   return (
