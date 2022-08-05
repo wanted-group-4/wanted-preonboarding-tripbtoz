@@ -38,7 +38,8 @@ function Search() {
   const maxPerson = +locationQuery.adult + +locationQuery.kid;
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery(['projects', maxPerson], fetchHotels, {
-      getNextPageParam: (_, allPages) => {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length === 0) return;
         if (allPages.length < 100) {
           return allPages.length + 1;
         }
@@ -57,12 +58,10 @@ function Search() {
   const handleClick = (hotelName: string) => {
     navigateSearch('/detail', { ...locationQuery, hotelName });
   };
-
+  console.log(data);
   return (
     <Container>
-      <SearchBarWrapper>
-        <SearchBar />
-      </SearchBarWrapper>
+      <SearchBar />
       <HotelCardSection>
         {data?.pages &&
           data.pages.map(page => {
@@ -101,26 +100,33 @@ function Search() {
 
 export default Search;
 
-const Container = styled.div``;
-
-const SearchBarWrapper = styled.div`
-  position: sticky;
-  top: 84px;
-  z-index: 100;
-  padding: 50px 0px 32px 0px;
-  background-color: white;
+const Container = styled.div`
+  @media ${({ theme }) => theme.deviceSize.tablet} {
+    padding: 0px 17px;
+  }
+  @media ${({ theme }) => theme.deviceSize.mobile} {
+    padding: 0px;
+  }
 `;
 
 const HotelCardSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 146px 0px;
   margin: 0 auto;
   gap: 15px;
   height: 100%;
   width: 612px;
   @media ${({ theme }) => theme.deviceSize.tablet} {
     width: 100%;
+    padding: 0 8px;
+    padding-top: 300px !important;
+  }
+  @media ${({ theme }) => theme.deviceSize.mobile} {
+    width: 100%;
+    padding: 0;
+    padding-top: 100px !important;
   }
 `;
 
