@@ -1,10 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 function Header() {
+  const { pathname } = useLocation();
   return (
-    <HeaderContainer>
+    <HeaderContainer pathname={pathname}>
       <LogoLink to="/">
         <Logo />
       </LogoLink>
@@ -15,12 +16,16 @@ function Header() {
 
 export default Header;
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.div<{ pathname: string }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 25px 30px;
   margin-bottom: 25px;
+  position: ${({ pathname }) => (pathname === '/' ? 'sticky' : 'static')};
+  top: 0;
+  background: #fff;
+  z-index: 99;
 `;
 
 const LogoLink = styled(NavLink)``;
