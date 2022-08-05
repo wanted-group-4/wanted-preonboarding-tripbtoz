@@ -32,3 +32,14 @@ export const patchReserveHotel = () => {
     onSuccess: () => queryClient.invalidateQueries(['reserved']),
   });
 };
+
+export const fetchReserveHotels = async ({ pageParam = 1 }) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/reserved?_page=${pageParam}&_limit=10`,
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
