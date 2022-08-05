@@ -7,6 +7,7 @@ interface ICalendarModal {
   handleModal: (key: string, value: boolean) => void;
   searchData: ISearchData;
   setSearchData: React.Dispatch<React.SetStateAction<ISearchData>>;
+  handleSearch: () => void;
 }
 
 function GuestReservation({
@@ -14,6 +15,7 @@ function GuestReservation({
   handleModal,
   searchData,
   setSearchData,
+  handleSearch,
 }: ICalendarModal) {
   const { adult, kid } = searchData.occupancy;
 
@@ -45,6 +47,11 @@ function GuestReservation({
       ...searchData,
       occupancy: { adult: 0, kid: 0 },
     });
+  };
+
+  const findHotel = async () => {
+    await handleSearch();
+    handleModal('occupancy', false);
   };
 
   const handlefocusOut = e => {
@@ -89,7 +96,7 @@ function GuestReservation({
           </SectionBox>
           <ButtonBox>
             <Button onClick={initialization}>초기화</Button>
-            <Button Apply onClick={() => handleModal('occupancy', false)}>
+            <Button Apply onClick={findHotel}>
               적용
             </Button>
           </ButtonBox>
