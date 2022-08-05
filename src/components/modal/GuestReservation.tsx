@@ -115,23 +115,11 @@ const Container = styled.div`
   background: #ffffff;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
   z-index: 100;
-  left: 54.7%;
   top: 205px;
-  @media screen and (max-width: 1660px) {
-    left: 56%;
-  }
-  @media screen and (max-width: 1374px) {
-    left: 57.3%;
-  }
-  @media screen and (max-width: 1125px) {
-    left: 58.8%;
-  }
-  @media screen and (max-width: 928px) {
-    left: 60.4%;
-  }
+  right: 0;
+  top: 70px;
   @media ${({ theme }) => theme.deviceSize.tablet} {
-    top: 280px;
-    left: 57.8%;
+    top: 145px;
   }
   @media ${({ theme }) => theme.deviceSize.middle} {
     width: 100vw;
@@ -163,6 +151,11 @@ const FirstSection = styled.div`
 `;
 const AgeGroup = styled.div`
   width: 50px;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    font-size: 22px;
+    width: 60px;
+    font-weight: 600;
+  }
 `;
 const Age = styled.div`
   color: ${({ theme }) => theme.color.grey_03};
@@ -209,6 +202,9 @@ const ButtonBox = styled.div`
     height: 19vw;
     width: 100%;
     padding: 10px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
   }
 `;
 const Button = styled.button<{ Apply?: any }>`
