@@ -4,8 +4,8 @@ import { BsStarFill } from 'react-icons/bs';
 
 interface HotelCardProps {
   name: string;
-  max: number;
-  base: number;
+  max?: number;
+  base?: number;
   price?: string;
   animation?: boolean;
   index?: number;
@@ -61,9 +61,11 @@ function HotelCard({
             </SubTitle>
           </ContentItem>
           <Personnel>
-            <span>
-              기준 {base}인 | 최대 {max}인
-            </span>
+            {base && max && (
+              <span>
+                기준 {base}인 | 최대 {max}인
+              </span>
+            )}
           </Personnel>
           {price && (
             <Price>
