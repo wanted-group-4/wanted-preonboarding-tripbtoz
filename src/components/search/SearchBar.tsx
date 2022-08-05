@@ -100,7 +100,7 @@ const SearchBarContainer = styled.div`
   align-items: center;
   border: 1px solid ${({ theme }) => theme.color.grey_03};
   border-radius: 4px;
-  @media ${({ theme }) => theme.deviceSize.tablet} {
+  @media ${({ theme }) => theme.deviceSize.middle} {
     width: 100%;
     display: block;
     border: none;

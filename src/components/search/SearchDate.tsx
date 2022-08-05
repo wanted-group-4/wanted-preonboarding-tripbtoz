@@ -54,7 +54,7 @@ const SearchDateContainer = styled.div`
   padding: 0 16px;
   width: 60%;
   border-right: 1px solid ${({ theme }) => theme.color.grey_03};
-  @media ${({ theme }) => theme.deviceSize.tablet} {
+  @media ${({ theme }) => theme.deviceSize.middle} {
     margin-bottom: 8px;
     padding: 0 48px;
     width: 100%;
