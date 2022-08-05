@@ -26,15 +26,15 @@ function Search() {
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery(['projects'], fetchHotels, {
       getNextPageParam: (_, allPages) => {
-        if (allPages.length !== 101) {
-          return allPages.length;
+        if (allPages.length < 100) {
+          return allPages.length + 1;
         }
       },
     });
-
+  console.log(data);
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (!hasNextPage || !data) return;
+      if (!hasNextPage || !data || isFetchingNextPage) return;
       fetchNextPage();
     }
   };
