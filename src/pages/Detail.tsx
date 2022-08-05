@@ -5,6 +5,7 @@ import useLocationString from '@hooks/useLocationString';
 import { getHotelInformation } from '@api/searchApi';
 import { patchReserveHotel } from '@api/reserveApi';
 import HotelCardSkeleton from '@src/components/common/skeleton/HotelCardSkeleton';
+import SearchBar from '@components/search/SearchBar';
 
 const SKELETON_COUNT = 2;
 
@@ -49,6 +50,7 @@ function Detail() {
 
   return (
     <Container>
+      <SearchBar />
       <Wrapper>
         {!isLoading ? (
           data &&
