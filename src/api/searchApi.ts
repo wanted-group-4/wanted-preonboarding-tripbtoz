@@ -1,23 +1,18 @@
 import axios from 'axios';
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { BASE_URL } from '@api/index';
 
 // 호텔 10개+@ 갖고오기
-const fetchHotels = async ({ queryKey }) => {
-  const page = queryKey[1];
+export const fetchHotels = async ({ pageParam = 1 }: any) => {
   try {
     const response = await axios.get(
-      `${BASE_URL}/hotels?_page=${page}&_limit=10`,
+      `${BASE_URL}/hotels?_page=${pageParam}&_limit=10`,
     );
-    return response.data;
+    return response;
   } catch (error) {
     console.log(error);
   }
-};
-
-export const getHotels = (hotelPage: number) => {
-  return useQuery(['hotels', hotelPage], fetchHotels);
 };
 
 // 호텔 하나에 대한 정보

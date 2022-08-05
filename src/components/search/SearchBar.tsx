@@ -8,6 +8,7 @@ import useNavigateSearch from '@hooks/useNavigateSearch';
 import theme from '@styles/theme';
 import { CalendarModal } from '@components/calendar';
 import { ISearchData } from '@type/search';
+import GuestReservation from '../modal/GuestReservation';
 
 function SearchBar() {
   const { width } = useWindowDimensions();
@@ -30,7 +31,7 @@ function SearchBar() {
         return setIsOpenModal(() => ({ calendar: false, occupancy: false }));
       }
       if (key === 'next')
-        return setIsOpenModal(() => ({ calendar: false, occpancy: true }));
+        return setIsOpenModal(() => ({ calendar: false, occupancy: true }));
       setIsOpenModal(isOpenModal => ({ ...isOpenModal, [key]: value }));
     }
     if (!isWebWidth) {
@@ -74,6 +75,12 @@ function SearchBar() {
         handleModal={handleModal}
         searchData={searchData}
       />
+      <GuestReservation
+        isOpenModal={isOpenModal}
+        handleModal={handleModal}
+        searchData={searchData}
+        setSearchData={setSearchData}
+      />
     </SearchBarContainer>
   );
 }
@@ -81,6 +88,7 @@ function SearchBar() {
 export default SearchBar;
 
 const SearchBarContainer = styled.div`
+  position: relative;
   margin: auto;
   display: flex;
   align-items: center;

@@ -8,8 +8,8 @@ interface HotelCardProps {
   base: number;
   price?: string;
   imageSize: {
-    width: number;
-    height: number;
+    desktop: { width: number; height: number };
+    mobile: { width: number; height: number };
   };
 }
 
@@ -25,7 +25,9 @@ function HotelCard({ imageSize, name, base, max, price }: HotelCardProps) {
             <Title>{name}</Title>
             <SubTitle>
               <Star>
-                <BsStarFill size={16} color="#FEC700" />
+                <IConWrap>
+                  <BsStarFill size={13} color="#FEC700" />
+                </IConWrap>
                 <span>4.4</span>
                 <span>/</span>
                 <span>5</span>
@@ -66,11 +68,21 @@ const Wrapper = styled.div`
   box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 `;
 
-const Image = styled.div<{ imageSize: { width: number; height: number } }>`
+const Image = styled.div<{
+  imageSize: {
+    desktop: { width: number; height: number };
+    mobile: { width: number; height: number };
+  };
+}>`
   display: block;
   img {
-    width: ${props => `${props.imageSize.width}px`};
-    height: ${props => `${props.imageSize.height}px`};
+    width: ${props => `${props.imageSize.desktop.width}px`};
+    height: ${props => `${props.imageSize.desktop.height}px`};
+    @media ${({ theme }) => theme.deviceSize.mobile} {
+      width: 41.5vw;
+      min-width: ${props => `${props.imageSize.mobile.height}px`};
+      height: ${props => `${props.imageSize.mobile.height}px`};
+    }
   }
 `;
 
@@ -80,48 +92,70 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  padding: 15px 30px;
+  padding: 5px 20px;
+  @media ${({ theme }) => theme.deviceSize.tablet} {
+    padding: 5px 15px;
+  }
 `;
 
 const ContentItem = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 const Title = styled.span`
+  word-break: break-all;
   font-weight: 700;
-  font-size: 18px;
   line-height: 21.78px;
   margin-bottom: 5px;
+  font-size: 18px;
+  @media ${({ theme }) => theme.deviceSize.mobile} {
+    font-size: 3.5vw;
+  }
 `;
 
 const SubTitle = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
+  word-break: break-all;
+  @media ${({ theme }) => theme.deviceSize.mobile} {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px 0;
+  }
 `;
 
 const Star = styled.div`
   display: flex;
   align-items: center;
   margin-right: 10px;
-  svg {
-    margin-bottom: 2px;
-  }
   span {
-    height: 100%;
     color: #5e5e5e;
-    font-size: 14px;
+    font-size: 10px;
     margin-left: 5px;
+    white-space: pre;
+  }
+`;
+
+const IConWrap = styled.div`
+  position: relative;
+  width: 14px;
+  height: 14px;
+  svg {
+    position: absolute;
+    top: 0;
   }
 `;
 
 const Review = styled.div`
   display: flex;
   align-items: center;
+  word-break: break-all;
   span {
-    height: 100%;
     color: #5e5e5e;
-    font-size: 14px;
+    font-size: 10px;
   }
 `;
 
@@ -129,6 +163,9 @@ const Personnel = styled.div`
   span {
     color: #5e5e5e;
     font-size: 14px;
+    @media ${({ theme }) => theme.deviceSize.mobile} {
+      font-size: 2vw;
+    }
   }
 `;
 
@@ -142,9 +179,15 @@ const Price = styled.span`
     font-weight: 700;
     font-size: 20px;
     margin-bottom: 5px;
+    @media ${({ theme }) => theme.deviceSize.mobile} {
+      font-size: 4vw;
+    }
   }
   span {
     font-size: 10px;
     color: #cdcdcd;
+    @media ${({ theme }) => theme.deviceSize.mobile} {
+      font-size: 1vw;
+    }
   }
 `;
