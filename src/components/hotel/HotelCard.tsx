@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { BsStarFill } from 'react-icons/bs';
 
 interface HotelCardProps {
@@ -7,15 +7,38 @@ interface HotelCardProps {
   max: number;
   base: number;
   price?: string;
+  animation?: boolean;
+  index?: number;
   imageSize: {
     desktop: { width: number; height: number };
     mobile: { width: number; height: number };
   };
 }
 
-function HotelCard({ imageSize, name, base, max, price }: HotelCardProps) {
+const fadeIn = keyframes`
+ from {
+    opacity : 0;
+    transform : translateY(20px)
+} to {
+    opacity : 1;
+    transform : translateY(0)
+}
+`;
+
+function HotelCard({
+  imageSize,
+  name,
+  base,
+  max,
+  price,
+  animation,
+  index,
+}: HotelCardProps) {
   return (
-    <Container>
+    <Container
+      animation={animation ? true : false}
+      delay={index ? `${index / 10}s` : '0s'}
+    >
       <Wrapper>
         <Image imageSize={imageSize}>
           <img src="./images/thumbnail_hotel.png" alt="호텔 사진" />
@@ -56,9 +79,20 @@ function HotelCard({ imageSize, name, base, max, price }: HotelCardProps) {
 
 export default HotelCard;
 
-const Container = styled.section`
+const Container = styled.section<{
+  animation: boolean;
+  delay: string;
+}>`
   width: 100%;
   cursor: pointer;
+  ${props =>
+    props.animation &&
+    css`
+      animation: ${fadeIn} 1s ease-in 0.5s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+      animation-delay: ${props.delay};
+    `}
 `;
 
 const Wrapper = styled.div`
