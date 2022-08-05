@@ -5,10 +5,14 @@ import axios from 'axios';
 import useIntersection from '@hooks/useIntersection';
 import SearchBar from '@src/components/search/SearchBar';
 
-const HomeImageSize: { width: number; height: number } = {
-  width: 220,
-  height: 170,
+const HomeImageSize = {
+  desktop: { width: 220, height: 170 },
+  mobile: {
+    width: 150,
+    height: 130,
+  },
 };
+
 interface Hotel {
   hotel_name: string;
   occupancy: {
