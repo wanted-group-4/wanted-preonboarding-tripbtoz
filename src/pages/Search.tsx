@@ -2,9 +2,12 @@ import React from 'react';
 import HotelCard from '@components/hotel/HotelCard';
 import styled from 'styled-components';
 import useIntersection from '@hooks/useIntersection';
-import SearchBar from '@src/components/search/SearchBar';
-import { fetchHotels } from '@src/api/searchApi';
+import SearchBar from '@components/search/SearchBar';
+import { fetchHotels } from '@api/searchApi';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import HotelCardSkeleton from '@components/common/skeleton/HotelCardSkeleton';
+
+const SKELETON_COUNT = 10;
 
 const HomeImageSize = {
   desktop: { width: 220, height: 170 },
@@ -12,6 +15,11 @@ const HomeImageSize = {
     width: 150,
     height: 130,
   },
+};
+
+const skeletonHeight = {
+  desktop: HomeImageSize.desktop.height,
+  mobile: HomeImageSize.mobile.height,
 };
 
 interface Hotel {
@@ -49,7 +57,7 @@ function Search() {
       <HotelCardWrapper>
         {data?.pages &&
           data.pages.map(page => {
-            return page.map((hotel: Hotel, key) => {
+            return page.map((hotel: Hotel, key: number) => {
               return (
                 <HotelCard
                   animation={true}
@@ -64,8 +72,12 @@ function Search() {
               );
             });
           })}
+        {isFetchingNextPage &&
+          Array.from({ length: SKELETON_COUNT }).map((_, index) => (
+            <HotelCardSkeleton key={index} skeletonHeight={skeletonHeight} />
+          ))}
       </HotelCardWrapper>
-      {/* {<Loading>로딩중...</Loading>} */}
+
       {data?.pages.length !== 0 && (
         <LastViewSection ref={setTarget}>마지막 호텔입니다</LastViewSection>
       )}
