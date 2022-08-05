@@ -5,19 +5,19 @@ import { BASE_URL } from '@api/index';
 
 export const patchReserveHotel = () => {
   const fetch = async ({
-    name,
+    hotelName,
     check_in,
     check_out,
     occupancy,
   }: {
-    name: string;
+    hotelName: string;
     check_in: any;
     check_out: any;
     occupancy: { adult: number; kid: number };
   }) => {
     try {
       await axios.post(`${BASE_URL}/reserved`, {
-        name,
+        hotelName,
         check_in,
         check_out,
         occupancy,
