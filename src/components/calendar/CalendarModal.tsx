@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
 import {
   Calendar,
@@ -23,6 +24,7 @@ function CalendarModal({
   handleSearch,
   setSearchData,
 }: ICalendarModal) {
+  const { pathname } = useLocation();
   const startMonth = new Date().getMonth();
   const [page, setPage] = useState<number>(startMonth);
 
@@ -35,8 +37,9 @@ function CalendarModal({
       id="background"
       isOpenModal={isOpenModal.calendar}
       onClick={handlefocusOut}
+      pathname={pathname}
     >
-      <CalendarModalContainer>
+      <CalendarModalContainer pathname={pathname}>
         <CalendarHeader handleModal={handleModal} />
         <CalendarMoveButton page={page} setPage={setPage} />
         <Calendar
@@ -55,22 +58,23 @@ function CalendarModal({
 
 export default CalendarModal;
 
-const Background = styled.div<{ isOpenModal: boolean }>`
+const Background = styled.div<{ isOpenModal: boolean; pathname: string }>`
   display: ${({ isOpenModal }) => (isOpenModal ? 'block' : 'none')};
-  position: absolute;
+  position: ${({ pathname }) => (pathname === '/' ? 'fixed' : 'absolute')};
   z-index: 100;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  /* background: red; */
 `;
 
-const CalendarModalContainer = styled.div`
+const CalendarModalContainer = styled.div<{ pathname: string }>`
   position: absolute;
   z-index: 100;
   width: 760px;
   height: 420px;
-  top: 230px;
+  top: ${({ pathname }) => (pathname === '/' ? '195px' : '155px')};
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
