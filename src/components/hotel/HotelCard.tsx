@@ -88,7 +88,7 @@ const Container = styled.section<{
   ${props =>
     props.animation &&
     css`
-      animation: ${fadeIn} 1s ease-in 0.5s;
+      animation: ${fadeIn} 0.28s cubic-bezier(0.5, 1, 0.89, 1) 0.5s;
       animation-fill-mode: forwards;
       opacity: 0;
       animation-delay: ${props.delay};
