@@ -79,7 +79,6 @@ function SearchBar() {
         handleModal={handleModal}
         searchData={searchData}
         setSearchData={setSearchData}
-        handleSearch={handleSearch}
       />
       <SearchCount
         isWeb={isWebWidth}
@@ -91,7 +90,6 @@ function SearchBar() {
         handleModal={handleModal}
         searchData={searchData}
         setSearchData={setSearchData}
-        handleSearch={handleSearch}
       />
       {isWebWidth && (
         <SearchButtonWrapper onClick={handleSearch}>
