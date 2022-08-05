@@ -9,6 +9,11 @@ export const fetchHotels = async ({ pageParam = 1 }) => {
     const response = await axios.get(
       `${BASE_URL}/hotels?_page=${pageParam}&_limit=10`,
     );
+
+    const getDelay = (delay: number) =>
+      new Promise(resolve => setTimeout(resolve, delay));
+    await getDelay(500);
+
     return response.data;
   } catch (error) {
     console.log(error);
