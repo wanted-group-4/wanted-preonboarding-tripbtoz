@@ -9,10 +9,12 @@ import GuestReservation from '@components/modal/GuestReservation';
 import IconWrapper from '@wrappers/IconWrapper';
 import useWindowDimensions from '@hooks/useWindowDimensions';
 import useNavigateSearch from '@hooks/useNavigateSearch';
+import useLocationString from '@hooks/useLocationString';
 import { ISearchData } from '@type/search';
 import theme from '@styles/theme';
 
 function SearchBar() {
+  const locationQuery = useLocationString();
   const { width } = useWindowDimensions();
   const navigateSearch = useNavigateSearch();
   const [isWebWidth, setIsWebWidth] = useState<boolean>(true);
@@ -23,13 +25,20 @@ function SearchBar() {
   });
 
   const [searchData, setSearchData] = useState<ISearchData>({
-    calendar: { checkIn: '', checkOut: '' },
-    occupancy: { adult: 0, kid: 0 },
+    calendar: {
+      checkIn: locationQuery.checkIn,
+      checkOut: locationQuery.checkOut,
+    },
+    occupancy: {
+      adult: locationQuery.adult ? +locationQuery.adult : 2,
+      kid: locationQuery.kid ? +locationQuery.kid : 0,
+    },
   });
 
   const handleModal = (key: string, value: boolean) => {
     if (isWebWidth) {
       if (key === 'focus') {
+        handleSearch();
         return setIsOpenModal(() => ({ calendar: false, occupancy: false }));
       }
       if (key === 'next')
@@ -70,6 +79,7 @@ function SearchBar() {
         handleModal={handleModal}
         searchData={searchData}
         setSearchData={setSearchData}
+        handleSearch={handleSearch}
       />
       <SearchCount
         isWeb={isWebWidth}
@@ -81,6 +91,7 @@ function SearchBar() {
         handleModal={handleModal}
         searchData={searchData}
         setSearchData={setSearchData}
+        handleSearch={handleSearch}
       />
       {isWebWidth && (
         <SearchButtonWrapper onClick={handleSearch}>
@@ -113,5 +124,6 @@ const SearchBarContainer = styled.div`
 `;
 
 const SearchButtonWrapper = styled.button`
+  padding: 20px;
   background-color: transparent;
 `;
