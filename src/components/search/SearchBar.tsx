@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { useLocation } from 'react-router-dom';
 
 import SearchDate from '@components/search/SearchDate';
 import SearchCount from '@components/search/SearchCount';
@@ -14,6 +15,7 @@ import { ISearchData } from '@type/search';
 import theme from '@styles/theme';
 
 function SearchBar() {
+  const { pathname } = useLocation();
   const locationQuery = useLocationString();
   const { width } = useWindowDimensions();
   const navigateSearch = useNavigateSearch();
@@ -75,22 +77,31 @@ function SearchBar() {
 
   return (
     <SearchBarContainer>
-      <SearchDate
-        isWeb={isWebWidth}
-        handleModal={handleModal}
-        searchData={searchData}
-      />
+      <Position pathname={pathname}>
+        <SearchWrap>
+          <SearchDate
+            isWeb={isWebWidth}
+            handleModal={handleModal}
+            searchData={searchData}
+          />
+          <SearchCount
+            isWeb={isWebWidth}
+            handleModal={handleModal}
+            searchData={searchData}
+          />
+          {isWebWidth && (
+            <SearchButtonWrapper onClick={handleSearch}>
+              <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
+            </SearchButtonWrapper>
+          )}
+        </SearchWrap>
+      </Position>
       <CalendarModal
         isOpenModal={isOpenModal}
         searchData={searchData}
         handleModal={handleModal}
         handleSearch={handleSearch}
         setSearchData={setSearchData}
-      />
-      <SearchCount
-        isWeb={isWebWidth}
-        handleModal={handleModal}
-        searchData={searchData}
       />
       <GuestReservation
         isOpenModal={isOpenModal}
@@ -99,32 +110,47 @@ function SearchBar() {
         setSearchData={setSearchData}
         handleSearch={handleSearch}
       />
-      {isWebWidth && (
-        <SearchButtonWrapper onClick={handleSearch}>
-          <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
-        </SearchButtonWrapper>
-      )}
     </SearchBarContainer>
   );
 }
 
 export default SearchBar;
 
-const SearchBarContainer = styled.div`
-  margin: auto;
-  padding: 0 24px;
+const SearchBarContainer = styled.div``;
+
+const Position = styled.div<{ pathname: string }>`
+  ${({ pathname }) =>
+    pathname === '/' &&
+    css`
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      transform: translate(-50%);
+      background: #fff;
+      width: 870px;
+      @media ${({ theme }) => theme.deviceSize.tablet} {
+        width: 100%;
+      }
+    `}
+  padding: 30px 0 50px;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    padding: 0;
+  }
+`;
+
+const SearchWrap = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid ${({ theme }) => theme.color.grey_03};
   border-radius: 4px;
+
   @media ${({ theme }) => theme.deviceSize.middle} {
-    padding: 0 8px;
+    padding: 10px 0 20px;
     width: 100%;
     display: block;
     border: none;
   }
   @media ${({ theme }) => theme.deviceSize.mobile} {
-    padding: 0;
     min-width: 300px;
     display: block;
     border: none;
