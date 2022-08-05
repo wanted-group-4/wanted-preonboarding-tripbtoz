@@ -90,11 +90,11 @@ function SearchBar() {
             handleModal={handleModal}
             searchData={searchData}
           />
-          <IconPosition />
+          {isWebWidth && <IconPosition />}
         </SearchWrap>
       </Position>
       {isWebWidth && (
-        <SearchButtonWrapper onClick={handleSearch}>
+        <SearchButtonWrapper onClick={handleSearch} pathname={pathname}>
           <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
         </SearchButtonWrapper>
       )}
@@ -145,7 +145,8 @@ const SearchWrap = styled.div`
   align-items: center;
   border: 1px solid ${({ theme }) => theme.color.grey_03};
   border-radius: 4px;
-
+  width: 870px;
+  margin: 0 auto;
   @media ${({ theme }) => theme.deviceSize.middle} {
     padding: 10px 0 20px;
     width: 100%;
@@ -159,16 +160,17 @@ const SearchWrap = styled.div`
   }
 `;
 
-const SearchButtonWrapper = styled.button`
-  position: fixed;
+const SearchButtonWrapper = styled.button<{ pathname: string }>`
+  position: ${({ pathname }) => (pathname === '/' ? 'fixed' : 'absolute')};
   top: 113px;
-  left: 50%;
-  transform: translateX(375px);
+  right: 50%;
+  transform: translateX(440px);
   padding: 20px;
   background-color: transparent;
   z-index: 110;
   @media ${({ theme }) => theme.deviceSize.tablet} {
-    transform: translateX(365px);
+    right: 5px;
+    transform: none;
   }
 `;
 
