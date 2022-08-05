@@ -9,7 +9,7 @@ interface ICalendarModal {
   setSearchData: React.Dispatch<React.SetStateAction<ISearchData>>;
 }
 
-export default function GuestReservation({
+function GuestReservation({
   isOpenModal,
   handleModal,
   searchData,
@@ -98,6 +98,8 @@ export default function GuestReservation({
     </>
   );
 }
+export default GuestReservation;
+
 const Background = styled.div<{ isOpenModal: boolean }>`
   display: ${({ isOpenModal }) => (isOpenModal ? 'block' : 'none')};
   position: absolute;

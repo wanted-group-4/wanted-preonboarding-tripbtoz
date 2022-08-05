@@ -16,7 +16,6 @@ function MobileHeader({ handleModal }: ICalendarHeaderProps) {
     </Container>
   );
 }
-
 export default MobileHeader;
 
 const Container = styled.div`
