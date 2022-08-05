@@ -92,20 +92,7 @@ const HotelCardWrapper = styled.div`
 `;
 
 const LastViewSection = styled.div`
-  padding: 100px;
-  height: 50px;
-  border: 1px solid red;
+  padding: 50px 0px;
   color: ${({ theme }) => theme.color.lightRed};
   text-align: center;
-`;
-
-const Loading = styled.div`
-  color: blue;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
 `;
