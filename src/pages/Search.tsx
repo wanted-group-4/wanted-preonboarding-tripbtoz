@@ -38,7 +38,8 @@ function Search() {
   const maxPerson = +locationQuery.adult + +locationQuery.kid;
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery(['projects', maxPerson], fetchHotels, {
-      getNextPageParam: (_, allPages) => {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length === 0) return;
         if (allPages.length < 100) {
           return allPages.length + 1;
         }
@@ -57,7 +58,7 @@ function Search() {
   const handleClick = (hotelName: string) => {
     navigateSearch('/detail', { ...locationQuery, hotelName });
   };
-
+  console.log(data);
   return (
     <Container>
       <SearchBar />
@@ -120,10 +121,12 @@ const HotelCardSection = styled.div`
   @media ${({ theme }) => theme.deviceSize.tablet} {
     width: 100%;
     padding: 0 8px;
+    padding-top: 300px !important;
   }
   @media ${({ theme }) => theme.deviceSize.mobile} {
     width: 100%;
     padding: 0;
+    padding-top: 100px !important;
   }
 `;
 
