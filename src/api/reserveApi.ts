@@ -15,12 +15,16 @@ export const patchReserveHotel = () => {
     check_out: any;
     occupancy: { adult: number; child: number };
   }) => {
-    await axios.post(`${BASE_URL}/reserved`, {
-      name,
-      check_in,
-      check_out,
-      occupancy,
-    });
+    try {
+      await axios.post(`${BASE_URL}/reserved`, {
+        name,
+        check_in,
+        check_out,
+        occupancy,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const queryClient = useQueryClient();
