@@ -38,19 +38,18 @@ function SearchBar() {
   const handleModal = (key: string, value: boolean) => {
     if (isWebWidth) {
       if (key === 'focus') {
-        handleSearch();
         return setIsOpenModal(() => ({ calendar: false, occupancy: false }));
       }
       if (key === 'next')
         return setIsOpenModal(() => ({ calendar: false, occupancy: true }));
-      setIsOpenModal(isOpenModal => ({ ...isOpenModal, [key]: value }));
     }
     if (!isWebWidth) {
       if (key === 'next') return;
-      setIsOpenModal(isOpenModal => ({ ...isOpenModal, [key]: value }));
       if (value) document.body.style.overflow = 'hidden';
       else document.body.style.overflow = '';
     }
+
+    setIsOpenModal(isOpenModal => ({ ...isOpenModal, [key]: value }));
   };
 
   const handleSearch = () => {
@@ -59,12 +58,19 @@ function SearchBar() {
     if (!adult && !kid) return navigateSearch('/', { checkIn, checkOut });
     if (!checkIn || !checkOut) return navigateSearch('/', { adult, kid });
     navigateSearch('/', { checkIn, checkOut, adult, kid });
+    setIsOpenModal(() => ({ calendar: false, occupancy: false }));
   };
 
   useEffect(() => {
     if (width <= +theme.size.middle.slice(0, -2)) {
       setIsWebWidth(false);
-    } else setIsWebWidth(true);
+      if (isOpenModal.calendar || isOpenModal.occupancy)
+        document.body.style.overflow = 'hidden';
+    } else {
+      setIsWebWidth(true);
+      if (isOpenModal.calendar || isOpenModal.occupancy)
+        document.body.style.overflow = '';
+    }
   }, [width]);
 
   return (
@@ -76,8 +82,9 @@ function SearchBar() {
       />
       <CalendarModal
         isOpenModal={isOpenModal}
-        handleModal={handleModal}
         searchData={searchData}
+        handleModal={handleModal}
+        handleSearch={handleSearch}
         setSearchData={setSearchData}
       />
       <SearchCount

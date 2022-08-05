@@ -10,15 +10,17 @@ import { ISearchData } from '@type/search';
 
 interface ICalendarModal {
   isOpenModal: { [key: string]: boolean };
-  handleModal: (key: string, value: boolean) => void;
   searchData: ISearchData;
+  handleModal: (key: string, value: boolean) => void;
+  handleSearch: () => void;
   setSearchData: React.Dispatch<React.SetStateAction<ISearchData>>;
 }
 
 function CalendarModal({
   isOpenModal,
-  handleModal,
   searchData,
+  handleModal,
+  handleSearch,
   setSearchData,
 }: ICalendarModal) {
   const startMonth = new Date().getMonth();
@@ -44,7 +46,7 @@ function CalendarModal({
           setSearchData={setSearchData}
         />
         <ButtonWrap>
-          <Button>적용</Button>
+          <Button onClick={handleSearch}>적용</Button>
         </ButtonWrap>
       </CalendarModalContainer>
     </Background>
@@ -68,7 +70,7 @@ const CalendarModalContainer = styled.div`
   z-index: 100;
   width: 760px;
   height: 420px;
-  top: 210px;
+  top: 230px;
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
