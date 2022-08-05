@@ -29,7 +29,7 @@ function SearchBar() {
         return setIsOpenModal(() => ({ calendar: false, occupancy: false }));
       }
       if (key === 'next')
-        return setIsOpenModal(() => ({ calendar: false, occpancy: true }));
+        return setIsOpenModal(() => ({ calendar: false, occupancy: true }));
       setIsOpenModal(isOpenModal => ({ ...isOpenModal, [key]: value }));
     }
     if (!isWebWidth) {
@@ -77,6 +77,7 @@ function SearchBar() {
 export default SearchBar;
 
 const SearchBarContainer = styled.div`
+  position: relative;
   margin: auto;
   display: flex;
   align-items: center;
