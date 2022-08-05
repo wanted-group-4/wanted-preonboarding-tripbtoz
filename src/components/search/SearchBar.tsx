@@ -61,6 +61,7 @@ function SearchBar() {
     if (!checkIn || !checkOut) return navigateSearch('/', { adult, kid });
     navigateSearch('/', { checkIn, checkOut, adult, kid });
     setIsOpenModal(() => ({ calendar: false, occupancy: false }));
+    document.body.style.overflow = '';
   };
 
   useEffect(() => {
@@ -89,13 +90,14 @@ function SearchBar() {
             handleModal={handleModal}
             searchData={searchData}
           />
-          {isWebWidth && (
-            <SearchButtonWrapper onClick={handleSearch}>
-              <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
-            </SearchButtonWrapper>
-          )}
+          <IconPosition />
         </SearchWrap>
       </Position>
+      {isWebWidth && (
+        <SearchButtonWrapper onClick={handleSearch}>
+          <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
+        </SearchButtonWrapper>
+      )}
       <CalendarModal
         isOpenModal={isOpenModal}
         searchData={searchData}
@@ -158,8 +160,20 @@ const SearchWrap = styled.div`
 `;
 
 const SearchButtonWrapper = styled.button`
-  position: relative;
+  position: fixed;
+  top: 113px;
+  left: 50%;
+  transform: translateX(375px);
   padding: 20px;
   background-color: transparent;
   z-index: 110;
+  @media ${({ theme }) => theme.deviceSize.tablet} {
+    transform: translateX(365px);
+  }
+`;
+
+const IconPosition = styled.div`
+  height: 100%;
+  width: 25px;
+  padding: 20px;
 `;
