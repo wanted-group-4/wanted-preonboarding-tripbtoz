@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import HotelCard from '@components/hotel/HotelCard';
 import styled from 'styled-components';
-import axios from 'axios';
 import useIntersection from '@hooks/useIntersection';
 import SearchBar from '@src/components/search/SearchBar';
+import { fetchHotels } from '@src/api/searchApi';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 const HomeImageSize = {
   desktop: { width: 220, height: 170 },
@@ -22,29 +23,23 @@ interface Hotel {
 }
 
 function Search() {
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState<Hotel[] | []>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery(['projects'], fetchHotels, {
+      getNextPageParam: (_, allPages) => {
+        if (allPages.length !== 101) {
+          return allPages.length;
+        }
+      },
+    });
 
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      setPage(prev => prev + 1);
-      setIsLoading(true);
+      if (!hasNextPage || !data) return;
+      fetchNextPage();
     }
   };
 
   const { setTarget } = useIntersection({ onIntersect });
-
-  useEffect(() => {
-    async function getData() {
-      const response = await axios.get(
-        `http://localhost:4000/hotels?_page=${page}`,
-      );
-      setData(prev => [...prev, ...response.data]);
-      setIsLoading(false);
-    }
-    getData();
-  }, [page]);
 
   return (
     <Container>
@@ -52,20 +47,26 @@ function Search() {
         <SearchBar />
       </SearchBarWrapper>
       <HotelCardWrapper>
-        {data &&
-          data.map((hotel: Hotel, key) => (
-            <HotelCard
-              key={key}
-              name={hotel.hotel_name}
-              base={hotel.occupancy.base}
-              max={hotel.occupancy.max}
-              price={'430,000원'}
-              imageSize={HomeImageSize}
-            />
-          ))}
-        {isLoading && <Loading>마지막 호텔입니다</Loading>}
+        {data?.pages &&
+          data.pages.map(page => {
+            return page.map((hotel: Hotel, key) => {
+              return (
+                <HotelCard
+                  key={key}
+                  name={hotel.hotel_name}
+                  base={hotel.occupancy.base}
+                  max={hotel.occupancy.max}
+                  price={'430,000원'}
+                  imageSize={HomeImageSize}
+                />
+              );
+            });
+          })}
       </HotelCardWrapper>
-      {data.length > 0 && <LastViewSection ref={setTarget} />}
+      {/* {<Loading>로딩중...</Loading>} */}
+      {data?.pages.length !== 0 && (
+        <LastViewSection ref={setTarget}>마지막 호텔입니다</LastViewSection>
+      )}
     </Container>
   );
 }
@@ -87,15 +88,24 @@ const HotelCardWrapper = styled.div`
   margin: 0 auto;
   gap: 15px;
   height: 100%;
+  width: 612px;
 `;
 
 const LastViewSection = styled.div`
   padding: 100px;
-  height: 100px;
+  height: 50px;
+  border: 1px solid red;
+  color: ${({ theme }) => theme.color.lightRed};
+  text-align: center;
 `;
 
 const Loading = styled.div`
-  color: #ff375c;
+  color: blue;
   text-align: center;
-  padding: 14px 0px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
 `;
