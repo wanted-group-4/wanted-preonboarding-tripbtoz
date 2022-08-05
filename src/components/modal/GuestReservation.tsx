@@ -46,13 +46,8 @@ function GuestReservation({
   const initialization = () => {
     setSearchData({
       ...searchData,
-      occupancy: { adult: 0, kid: 0 },
+      occupancy: { adult: 2, kid: 0 },
     });
-  };
-
-  const findHotel = async () => {
-    await handleSearch();
-    handleModal('occupancy', false);
   };
 
   const handlefocusOut = e => {
@@ -97,7 +92,7 @@ function GuestReservation({
           </SectionBox>
           <ButtonBox>
             <Button onClick={initialization}>초기화</Button>
-            <Button Apply onClick={findHotel}>
+            <Button Apply onClick={() => handleSearch}>
               적용
             </Button>
           </ButtonBox>
