@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 import SearchDate from '@components/search/SearchDate';
 import SearchCount from '@components/search/SearchCount';
+import { CalendarModal } from '@components/calendar';
+import GuestReservation from '@components/modal/GuestReservation';
+import IconWrapper from '@wrappers/IconWrapper';
 import useWindowDimensions from '@hooks/useWindowDimensions';
 import useNavigateSearch from '@hooks/useNavigateSearch';
-import theme from '@styles/theme';
-import { CalendarModal } from '@components/calendar';
 import { ISearchData } from '@type/search';
-import GuestReservation from '../modal/GuestReservation';
+import theme from '@styles/theme';
 
 function SearchBar() {
   const { width } = useWindowDimensions();
@@ -42,20 +44,19 @@ function SearchBar() {
     }
   };
 
+  const handleSearch = () => {
+    const { checkIn, checkOut } = searchData.calendar;
+    const { adult, kid } = searchData.occupancy;
+    if (!adult && !kid) return navigateSearch('/', { checkIn, checkOut });
+    if (!checkIn || !checkOut) return navigateSearch('/', { adult, kid });
+    navigateSearch('/', { checkIn, checkOut, adult, kid });
+  };
+
   useEffect(() => {
     if (width <= +theme.size.middle.slice(0, -2)) {
       setIsWebWidth(false);
     } else setIsWebWidth(true);
   }, [width]);
-
-  useEffect(() => {
-    navigateSearch('/', {
-      checkIn: searchData.calendar.checkIn,
-      checkOut: searchData.calendar.checkOut,
-      adult: searchData.occupancy.adult,
-      kid: searchData.occupancy.kid,
-    });
-  }, [searchData]);
 
   return (
     <SearchBarContainer>
@@ -81,6 +82,11 @@ function SearchBar() {
         searchData={searchData}
         setSearchData={setSearchData}
       />
+      {isWebWidth && (
+        <SearchButtonWrapper onClick={handleSearch}>
+          <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
+        </SearchButtonWrapper>
+      )}
     </SearchBarContainer>
   );
 }
@@ -100,8 +106,12 @@ const SearchBarContainer = styled.div`
     border: none;
   }
   @media ${({ theme }) => theme.deviceSize.mobile} {
-    min-width: 300px; // temp
+    min-width: 300px;
     display: block;
     border: none;
   }
+`;
+
+const SearchButtonWrapper = styled.button`
+  background-color: transparent;
 `;
