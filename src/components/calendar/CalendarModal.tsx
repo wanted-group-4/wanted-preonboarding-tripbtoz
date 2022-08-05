@@ -39,7 +39,7 @@ function CalendarModal({
       onClick={handlefocusOut}
       pathname={pathname}
     >
-      <CalendarModalContainer pathname={pathname}>
+      <CalendarModalContainer>
         <CalendarHeader handleModal={handleModal} />
         <CalendarMoveButton page={page} setPage={setPage} />
         <Calendar
@@ -69,12 +69,12 @@ const Background = styled.div<{ isOpenModal: boolean; pathname: string }>`
   /* background: red; */
 `;
 
-const CalendarModalContainer = styled.div<{ pathname: string }>`
+const CalendarModalContainer = styled.div`
   position: absolute;
   z-index: 100;
   width: 760px;
   height: 420px;
-  top: ${({ pathname }) => (pathname === '/' ? '195px' : '155px')};
+  top: 195px;
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
