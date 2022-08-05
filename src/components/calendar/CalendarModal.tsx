@@ -66,7 +66,6 @@ const Background = styled.div<{ isOpenModal: boolean; pathname: string }>`
   height: 100%;
   top: 0;
   left: 0;
-  /* background: red; */
 `;
 
 const CalendarModalContainer = styled.div`
