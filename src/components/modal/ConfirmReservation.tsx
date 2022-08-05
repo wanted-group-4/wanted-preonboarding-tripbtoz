@@ -1,14 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function ConfirmReservation() {
+interface ConfirmReservationProps {
+  closeConfirmReservation: () => void;
+}
+
+function ConfirmReservation({
+  closeConfirmReservation,
+}: ConfirmReservationProps) {
   return (
     <>
       <BackGround>
         <Container>
           <div>
             <Text>예약이 완료되었습니다</Text>
-            <Button>확인</Button>
+            <Button onClick={closeConfirmReservation}>확인</Button>
           </div>
         </Container>
       </BackGround>
