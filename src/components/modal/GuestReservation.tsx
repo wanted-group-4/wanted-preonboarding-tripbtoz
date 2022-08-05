@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import MobileHeader from '@components/modal/MobileHeader';
 import { ISearchData } from '@type/search';
+import { useLocation } from 'react-router-dom';
 
 interface IGuestReservationModal {
   isOpenModal: { [key: string]: boolean };
@@ -19,6 +20,7 @@ function GuestReservation({
   handleSearch,
 }: IGuestReservationModal) {
   const { adult, kid } = searchData.occupancy;
+  const { pathname } = useLocation();
 
   const handleCountMinus = e => {
     const { name } = e.target;
@@ -59,9 +61,10 @@ function GuestReservation({
       <Background
         id="background"
         isOpenModal={isOpenModal.occupancy}
+        pathname={pathname}
         onClick={handlefocusOut}
       >
-        <Container>
+        <Container pathname={pathname}>
           <MobileHeader handleModal={handleModal} />
           <SectionBox>
             <FirstSection>
@@ -103,8 +106,9 @@ function GuestReservation({
 }
 export default GuestReservation;
 
-const Background = styled.div<{ isOpenModal: boolean }>`
+const Background = styled.div<{ isOpenModal: boolean; pathname: string }>`
   display: ${({ isOpenModal }) => (isOpenModal ? 'block' : 'none')};
+  position: ${({ pathname }) => (pathname === '/' ? 'fixed' : 'absolute')};
   position: absolute;
   z-index: 100;
   width: 100%;
@@ -112,7 +116,7 @@ const Background = styled.div<{ isOpenModal: boolean }>`
   top: 0;
   left: 0;
 `;
-const Container = styled.div`
+const Container = styled.div<{ pathname: string }>`
   position: absolute;
   width: 319px;
   height: 190px;
@@ -120,7 +124,7 @@ const Container = styled.div`
   background: #ffffff;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
   z-index: 100;
-  top: 230px;
+  top: ${({ pathname }) => (pathname === '/' ? '195px' : '155px')};
   right: 50%;
   transform: translateX(+390px);
   @media ${({ theme }) => theme.deviceSize.middle} {
