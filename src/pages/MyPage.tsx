@@ -44,25 +44,31 @@ function MyPage() {
   return (
     <Container>
       <Title>내 예약 확인하기</Title>
-
-      {data?.pages.map(page => {
-        return page.map((hotel: Hotel, key) => {
-          const start = hotel.check_in.split('-');
-          const end = hotel.check_out.split('-');
-          return (
-            <HotelCardWrapper key={key}>
-              <ReservationDate>
-                {`${start[0]}.${start[1]}.${start[2]} ~ ${end[0]}.${end[1]}.${end[2]} (성인 ${hotel.occupancy.adult}명 어린이 ${hotel.occupancy.kid}명)`}
-              </ReservationDate>
-              <HotelCard
-                imageSize={HomeImageSize}
-                name={hotel.name}
-                price={'430,000원'}
-              />
-            </HotelCardWrapper>
-          );
-        });
-      })}
+      {data &&
+        (data.pages[0].length !== 0 ? (
+          data.pages.map(page => {
+            return page.map((hotel: Hotel, key) => {
+              const start = hotel.check_in.split('-');
+              const end = hotel.check_out.split('-');
+              return (
+                <HotelCardWrapper key={key}>
+                  <ReservationDate>
+                    {`${start[0]}.${start[1]}.${start[2]} ~ ${end[0]}.${end[1]}.${end[2]} (성인 ${hotel.occupancy.adult}명 어린이 ${hotel.occupancy.kid}명)`}
+                  </ReservationDate>
+                  <HotelCard
+                    imageSize={HomeImageSize}
+                    name={hotel.name}
+                    price={'430,000원'}
+                  />
+                </HotelCardWrapper>
+              );
+            });
+          })
+        ) : (
+          <NoReservation>
+            <span>예약 내역이 없습니다.</span>
+          </NoReservation>
+        ))}
       {data?.pages[0].length !== 0 && (
         <LastViewSection ref={setTarget}>마지막 호텔입니다</LastViewSection>
       )}
@@ -129,4 +135,21 @@ const LastViewSection = styled.div`
   padding: 50px 0px;
   color: ${({ theme }) => theme.color.lightRed};
   text-align: center;
+`;
+
+const NoReservation = styled.div`
+  width: 100%;
+  text-align: center;
+  padding: 40px 0;
+  font-size: 22px;
+  span {
+    color: ${({ theme }) => theme.color.lightRed};
+  }
+
+  @media ${({ theme }) => theme.deviceSize.tablet} {
+    font-size: 18px;
+  }
+  @media ${({ theme }) => theme.deviceSize.mobile} {
+    font-size: 14px;
+  }
 `;
