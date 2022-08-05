@@ -52,6 +52,8 @@ function Search() {
             return page.map((hotel: Hotel, key) => {
               return (
                 <HotelCard
+                  animation={true}
+                  index={key}
                   key={key}
                   name={hotel.hotel_name}
                   base={hotel.occupancy.base}
