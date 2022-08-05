@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import MobileHeader from '@components/modal/MobileHeader';
 import { ISearchData } from '@type/search';
-interface ICalendarModal {
+
+interface IGuestReservationModal {
   isOpenModal: { [key: string]: boolean };
   handleModal: (key: string, value: boolean) => void;
   searchData: ISearchData;
   setSearchData: React.Dispatch<React.SetStateAction<ISearchData>>;
+  handleSearch: () => void;
 }
 
 function GuestReservation({
@@ -14,7 +16,8 @@ function GuestReservation({
   handleModal,
   searchData,
   setSearchData,
-}: ICalendarModal) {
+  handleSearch,
+}: IGuestReservationModal) {
   const { adult, kid } = searchData.occupancy;
 
   const handleCountMinus = e => {
@@ -45,6 +48,11 @@ function GuestReservation({
       ...searchData,
       occupancy: { adult: 0, kid: 0 },
     });
+  };
+
+  const findHotel = async () => {
+    await handleSearch();
+    handleModal('occupancy', false);
   };
 
   const handlefocusOut = e => {
@@ -89,7 +97,7 @@ function GuestReservation({
           </SectionBox>
           <ButtonBox>
             <Button onClick={initialization}>초기화</Button>
-            <Button Apply onClick={() => handleModal('occupancy', false)}>
+            <Button Apply onClick={findHotel}>
               적용
             </Button>
           </ButtonBox>
@@ -117,13 +125,11 @@ const Container = styled.div`
   background: #ffffff;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
   z-index: 100;
-  top: 205px;
-  right: 0;
-  top: 70px;
-  @media ${({ theme }) => theme.deviceSize.tablet} {
-    top: 145px;
-  }
+  top: 230px;
+  right: 50%;
+  transform: translateX(+390px);
   @media ${({ theme }) => theme.deviceSize.middle} {
+    transform: none;
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -137,7 +143,7 @@ const Container = styled.div`
 const SectionBox = styled.div`
   position: relative;
   top: 17px;
-  padding: 17px;
+  padding: 20px;
   @media ${({ theme }) => theme.deviceSize.middle} {
     width: 100vw;
     height: 60vh;
@@ -154,9 +160,9 @@ const FirstSection = styled.div`
 const AgeGroup = styled.div`
   width: 50px;
   @media ${({ theme }) => theme.deviceSize.middle} {
-    font-size: 22px;
-    width: 60px;
-    font-weight: 600;
+    padding-top: 1px;
+    font-size: 5vw;
+    width: 20vw;
   }
 `;
 const Age = styled.div`
@@ -165,8 +171,9 @@ const Age = styled.div`
   left: -35px;
   font-size: 12px;
   @media ${({ theme }) => theme.deviceSize.middle} {
+    font-size: 3vw;
     flex: 1 1 auto;
-    left: 0;
+    left: -20px;
   }
 `;
 const CountBox = styled.div`
@@ -179,11 +186,19 @@ const Count = styled.button`
   width: 30px;
   font-size: 20px;
   font-weight: 500;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    font-size: 5vw;
+    width: 10vw;
+  }
 `;
 const Number = styled.span`
   display: inline-block;
   width: 50px;
   text-align: center;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    font-size: 4vw;
+    width: 10vw;
+  }
 `;
 
 const SecondSection = styled.div`

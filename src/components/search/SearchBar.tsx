@@ -90,6 +90,7 @@ function SearchBar() {
         handleModal={handleModal}
         searchData={searchData}
         setSearchData={setSearchData}
+        handleSearch={handleSearch}
       />
       {isWebWidth && (
         <SearchButtonWrapper onClick={handleSearch}>
@@ -103,7 +104,6 @@ function SearchBar() {
 export default SearchBar;
 
 const SearchBarContainer = styled.div`
-  position: relative;
   margin: auto;
   display: flex;
   align-items: center;
