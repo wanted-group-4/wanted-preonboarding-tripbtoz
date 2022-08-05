@@ -64,7 +64,7 @@ function GuestReservation({
         pathname={pathname}
         onClick={handlefocusOut}
       >
-        <Container pathname={pathname}>
+        <Container>
           <MobileHeader handleModal={handleModal} />
           <SectionBox>
             <FirstSection>
@@ -109,14 +109,13 @@ export default GuestReservation;
 const Background = styled.div<{ isOpenModal: boolean; pathname: string }>`
   display: ${({ isOpenModal }) => (isOpenModal ? 'block' : 'none')};
   position: ${({ pathname }) => (pathname === '/' ? 'fixed' : 'absolute')};
-  position: absolute;
   z-index: 100;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
 `;
-const Container = styled.div<{ pathname: string }>`
+const Container = styled.div`
   position: absolute;
   width: 319px;
   height: 190px;
@@ -124,7 +123,7 @@ const Container = styled.div<{ pathname: string }>`
   background: #ffffff;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
   z-index: 100;
-  top: ${({ pathname }) => (pathname === '/' ? '195px' : '155px')};
+  top: 195px;
   right: 50%;
   transform: translateX(+390px);
   @media ${({ theme }) => theme.deviceSize.middle} {
