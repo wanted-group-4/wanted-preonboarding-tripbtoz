@@ -6,6 +6,8 @@ import SearchBar from '@components/search/SearchBar';
 import { fetchHotels } from '@api/searchApi';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import HotelCardSkeleton from '@components/common/skeleton/HotelCardSkeleton';
+import useLocationString from '@hooks/useLocationString';
+import useNavigateSearch from '@hooks/useNavigateSearch';
 
 const SKELETON_COUNT = 10;
 
@@ -31,8 +33,12 @@ interface Hotel {
 }
 
 function Search() {
+  const locationQuery = useLocationString();
+  const navigateSearch = useNavigateSearch();
+  const maxPerson = +locationQuery.adult + +locationQuery.kid;
+
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery(['projects'], fetchHotels, {
+    useInfiniteQuery(['projects', maxPerson], fetchHotels, {
       getNextPageParam: (_, allPages) => {
         if (allPages.length < 100) {
           return allPages.length + 1;
@@ -49,26 +55,35 @@ function Search() {
 
   const { setTarget } = useIntersection({ onIntersect });
 
+  const handleClick = (hotelName: string) => {
+    navigateSearch('/detail', { ...locationQuery, hotelName });
+  };
+
   return (
     <Container>
       <SearchBarWrapper>
         <SearchBar />
       </SearchBarWrapper>
-      <HotelCardWrapper>
+      <HotelCardSection>
         {data?.pages &&
           data.pages.map(page => {
             return page.map((hotel: Hotel, key: number) => {
               return (
-                <HotelCard
-                  animation={true}
-                  index={key}
+                <HotelCardWrapper
                   key={key}
-                  name={hotel.hotel_name}
-                  base={hotel.occupancy.base}
-                  max={hotel.occupancy.max}
-                  price={'430,000원'}
-                  imageSize={HomeImageSize}
-                />
+                  onClick={() => handleClick(hotel.hotel_name)}
+                >
+                  <HotelCard
+                    animation={true}
+                    index={key}
+                    key={key}
+                    name={hotel.hotel_name}
+                    base={hotel.occupancy.base}
+                    max={hotel.occupancy.max}
+                    price={'430,000원'}
+                    imageSize={HomeImageSize}
+                  />
+                </HotelCardWrapper>
               );
             });
           })}
@@ -76,7 +91,7 @@ function Search() {
           Array.from({ length: SKELETON_COUNT }).map((_, index) => (
             <HotelCardSkeleton key={index} skeletonHeight={skeletonHeight} />
           ))}
-      </HotelCardWrapper>
+      </HotelCardSection>
 
       {data?.pages.length !== 0 && (
         <LastViewSection ref={setTarget}>마지막 호텔입니다</LastViewSection>
@@ -95,7 +110,7 @@ const SearchBarWrapper = styled.div`
   margin-bottom: 65px;
 `;
 
-const HotelCardWrapper = styled.div`
+const HotelCardSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -103,6 +118,10 @@ const HotelCardWrapper = styled.div`
   gap: 15px;
   height: 100%;
   width: 612px;
+`;
+
+const HotelCardWrapper = styled.div`
+  width: 100%;
 `;
 
 const LastViewSection = styled.div`
