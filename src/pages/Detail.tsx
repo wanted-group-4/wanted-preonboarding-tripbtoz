@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { HotelCard, ReserveCard } from '@components/hotel';
 
-const DetailImageSize: { width: number; height: number } = {
-  width: 260,
-  height: 130,
+const DetailImageSize = {
+  desktop: { width: 240, height: 130 },
+  mobile: {
+    width: 200,
+    height: 130,
+  },
 };
 
 interface DetailProps {
@@ -25,13 +28,6 @@ const initDummyData: DetailProps[] = [
   },
   {
     hotel_name: '고창 웰파크시티 힐링카운티',
-    occupancy: {
-      base: 2,
-      max: 2,
-    },
-  },
-  {
-    hotel_name: '사우 베이 리조트',
     occupancy: {
       base: 2,
       max: 2,
@@ -70,10 +66,16 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 30px;
+  background: #eeeeee;
 `;
 
 const Box = styled.article`
+  width: 100%;
   background: white;
-  width: 550px;
   padding: 30px;
+  margin-bottom: 30px;
+  @media ${({ theme }) => theme.deviceSize.tablet} {
+    width: 100vw;
+  }
 `;
