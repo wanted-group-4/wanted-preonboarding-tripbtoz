@@ -13,7 +13,7 @@ export const patchReserveHotel = () => {
     name: string;
     check_in: any;
     check_out: any;
-    occupancy: { adult: number; child: number };
+    occupancy: { adult: number; kid: number };
   }) => {
     try {
       await axios.post(`${BASE_URL}/reserved`, {
