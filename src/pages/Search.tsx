@@ -26,15 +26,15 @@ function Search() {
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery(['projects'], fetchHotels, {
       getNextPageParam: (_, allPages) => {
-        if (allPages.length !== 101) {
-          return allPages.length;
+        if (allPages.length < 100) {
+          return allPages.length + 1;
         }
       },
     });
 
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (!hasNextPage || !data) return;
+      if (!hasNextPage || !data || isFetchingNextPage) return;
       fetchNextPage();
     }
   };
@@ -94,20 +94,7 @@ const HotelCardWrapper = styled.div`
 `;
 
 const LastViewSection = styled.div`
-  padding: 100px;
-  height: 50px;
-  border: 1px solid red;
+  padding: 50px 0px;
   color: ${({ theme }) => theme.color.lightRed};
   text-align: center;
-`;
-
-const Loading = styled.div`
-  color: blue;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
 `;
