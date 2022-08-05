@@ -37,6 +37,10 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    width: 250px;
+    height: 150px;
+  }
 `;
 const Text = styled.div`
   font-weight: 600;
@@ -45,6 +49,9 @@ const Text = styled.div`
   color: #000000;
   position: relative;
   top: -10px;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    font-size: 13px;
+  }
 `;
 
 const Button = styled.button`
@@ -58,4 +65,10 @@ const Button = styled.button`
   position: relative;
   right: -19px;
   top: 30px;
+  @media ${({ theme }) => theme.deviceSize.middle} {
+    font-size: 10px;
+    right: -10px;
+    top: 25px;
+    font-weight: 400;
+  }
 `;
