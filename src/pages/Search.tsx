@@ -36,7 +36,6 @@ function Search() {
   const locationQuery = useLocationString();
   const navigateSearch = useNavigateSearch();
   const maxPerson = +locationQuery.adult + +locationQuery.kid;
-
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery(['projects', maxPerson], fetchHotels, {
       getNextPageParam: (_, allPages) => {
@@ -93,7 +92,7 @@ function Search() {
           ))}
       </HotelCardSection>
 
-      {data?.pages.length !== 0 && (
+      {data?.pages[0].length !== 0 && (
         <LastViewSection ref={setTarget}>마지막 호텔입니다</LastViewSection>
       )}
     </Container>
@@ -118,6 +117,9 @@ const HotelCardSection = styled.div`
   gap: 15px;
   height: 100%;
   width: 612px;
+  @media ${({ theme }) => theme.deviceSize.tablet} {
+    width: 100%;
+  }
 `;
 
 const HotelCardWrapper = styled.div`
