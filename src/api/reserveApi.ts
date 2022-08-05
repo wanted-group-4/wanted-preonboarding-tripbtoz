@@ -4,28 +4,30 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { BASE_URL } from '@api/index';
 
 interface PatchReserveHotelParams {
-  name: string;
+  hotelName: string;
   check_in: string;
   check_out: string;
   occupancy: { adult: number; kid: number };
 }
 
-export const patchReserveHotel = async ({
-  name,
-  check_in,
-  check_out,
-  occupancy,
-}: PatchReserveHotelParams) => {
-  try {
-    await axios.post(`${BASE_URL}/reserved`, {
-      name,
-      check_in,
-      check_out,
-      occupancy,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+export const patchReserveHotel = () => {
+  const fetch = async ({
+    hotelName,
+    check_in,
+    check_out,
+    occupancy,
+  }: PatchReserveHotelParams) => {
+    try {
+      await axios.post(`${BASE_URL}/reserved`, {
+        hotelName,
+        check_in,
+        check_out,
+        occupancy,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const queryClient = useQueryClient();
   return useMutation(fetch, {

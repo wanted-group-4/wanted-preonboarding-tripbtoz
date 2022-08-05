@@ -22,22 +22,19 @@ function Detail() {
 
   const { data, isLoading } = getHotelInformation(hotelName);
 
-  const handleReserve = async (): Promise<void> => {
+  const patchReserveHotelInfo = patchReserveHotel();
+  const handleReserve = () => {
     if (!hotelName) return;
-    try {
-      await patchReserveHotel({
-        name: hotelName,
-        check_in: checkIn,
-        check_out: checkOut,
-        occupancy: {
-          adult: Number(adult),
-          kid: Number(kid),
-        },
-      });
-      setLocalStorage();
-    } catch (error) {
-      console.log(error);
-    }
+    patchReserveHotelInfo.mutate({
+      hotelName: hotelName,
+      check_in: checkIn,
+      check_out: checkOut,
+      occupancy: {
+        adult: Number(adult),
+        kid: Number(kid),
+      },
+    });
+    setLocalStorage();
   };
 
   const setLocalStorage = () => {
