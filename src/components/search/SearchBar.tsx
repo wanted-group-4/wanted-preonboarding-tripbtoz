@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 import SearchDate from '@components/search/SearchDate';
 import SearchCount from '@components/search/SearchCount';
-import useWindowDimensions from '@hooks/useWindowDimensions';
-import theme from '@styles/theme';
 import { CalendarModal } from '@components/calendar';
+import GuestReservation from '@components/modal/GuestReservation';
+import IconWrapper from '@wrappers/IconWrapper';
+import useWindowDimensions from '@hooks/useWindowDimensions';
+import useNavigateSearch from '@hooks/useNavigateSearch';
 import { ISearchData } from '@type/search';
-import GuestReservation from '../modal/GuestReservation';
+import theme from '@styles/theme';
 
 function SearchBar() {
   const { width } = useWindowDimensions();
-  const [isWebWidth, setIsWebWidth] = useState(true);
+  const navigateSearch = useNavigateSearch();
+  const [isWebWidth, setIsWebWidth] = useState<boolean>(true);
 
   const [isOpenModal, setIsOpenModal] = useState<{ [key: string]: boolean }>({
     calendar: false,
@@ -38,6 +42,14 @@ function SearchBar() {
       if (value) document.body.style.overflow = 'hidden';
       else document.body.style.overflow = '';
     }
+  };
+
+  const handleSearch = () => {
+    const { checkIn, checkOut } = searchData.calendar;
+    const { adult, kid } = searchData.occupancy;
+    if (!adult && !kid) return navigateSearch('/', { checkIn, checkOut });
+    if (!checkIn || !checkOut) return navigateSearch('/', { adult, kid });
+    navigateSearch('/', { checkIn, checkOut, adult, kid });
   };
 
   useEffect(() => {
@@ -70,6 +82,11 @@ function SearchBar() {
         searchData={searchData}
         setSearchData={setSearchData}
       />
+      {isWebWidth && (
+        <SearchButtonWrapper onClick={handleSearch}>
+          <IconWrapper icon={<AiOutlineSearch />} color="pink_02" />
+        </SearchButtonWrapper>
+      )}
     </SearchBarContainer>
   );
 }
@@ -83,14 +100,18 @@ const SearchBarContainer = styled.div`
   align-items: center;
   border: 1px solid ${({ theme }) => theme.color.grey_03};
   border-radius: 4px;
-  @media ${({ theme }) => theme.deviceSize.tablet} {
+  @media ${({ theme }) => theme.deviceSize.middle} {
     width: 100%;
     display: block;
     border: none;
   }
   @media ${({ theme }) => theme.deviceSize.mobile} {
-    min-width: 300px; // temp
+    min-width: 300px;
     display: block;
     border: none;
   }
+`;
+
+const SearchButtonWrapper = styled.button`
+  background-color: transparent;
 `;

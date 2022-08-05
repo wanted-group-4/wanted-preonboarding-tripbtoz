@@ -4,6 +4,7 @@ import styled from 'styled-components';
 interface IIconWrapperProps {
   icon: JSX.Element;
   color?: string;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
 function IconWrapper({ icon, color }: IIconWrapperProps) {
