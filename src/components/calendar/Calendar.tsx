@@ -26,7 +26,7 @@ function Calendar({
   const { year, month } = getDate();
 
   useEffect(() => {
-    setDefaultDate(dateRef, searchData);
+    setDefaultDate(dateRef);
     disabledDate(dateRef);
   }, []);
 
