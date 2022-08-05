@@ -10,6 +10,7 @@ function useLocationString() {
     checkOut: query.get('checkOut') ?? defaultCheckOut,
     adult: query.get('adult') ?? 2,
     kid: query.get('kid') ?? 0,
+    hotelName: query.get('hotelName'),
   };
   return result;
 }
