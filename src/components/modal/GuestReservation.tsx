@@ -92,7 +92,7 @@ function GuestReservation({
           </SectionBox>
           <ButtonBox>
             <Button onClick={initialization}>초기화</Button>
-            <Button Apply onClick={() => handleSearch}>
+            <Button Apply onClick={handleSearch}>
               적용
             </Button>
           </ButtonBox>
