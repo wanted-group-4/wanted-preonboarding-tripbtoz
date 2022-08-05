@@ -141,4 +141,11 @@ const Day = styled.button<{ dayOfWeek: number }>`
     width: 10vw;
     height: 10vw;
   }
+  &:hover {
+    border: 3px solid ${({ theme }) => theme.color.pink_02};
+    border-radius: 50%;
+    @media ${({ theme }) => theme.deviceSize.middle} {
+      border-width: 5px;
+    }
+  }
 `;
