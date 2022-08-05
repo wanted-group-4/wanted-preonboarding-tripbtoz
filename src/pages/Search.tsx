@@ -31,7 +31,7 @@ function Search() {
         }
       },
     });
-  console.log(data);
+
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting) {
       if (!hasNextPage || !data || isFetchingNextPage) return;
