@@ -4,13 +4,15 @@ import styled from 'styled-components';
 import SearchDate from '@components/search/SearchDate';
 import SearchCount from '@components/search/SearchCount';
 import useWindowDimensions from '@hooks/useWindowDimensions';
+import useNavigateSearch from '@hooks/useNavigateSearch';
 import theme from '@styles/theme';
 import { CalendarModal } from '@components/calendar';
 import { ISearchData } from '@type/search';
 
 function SearchBar() {
   const { width } = useWindowDimensions();
-  const [isWebWidth, setIsWebWidth] = useState(true);
+  const navigateSearch = useNavigateSearch();
+  const [isWebWidth, setIsWebWidth] = useState<boolean>(true);
 
   const [isOpenModal, setIsOpenModal] = useState<{ [key: string]: boolean }>({
     calendar: false,
@@ -44,6 +46,15 @@ function SearchBar() {
       setIsWebWidth(false);
     } else setIsWebWidth(true);
   }, [width]);
+
+  useEffect(() => {
+    navigateSearch('/', {
+      checkIn: searchData.calendar.checkIn,
+      checkOut: searchData.calendar.checkOut,
+      adult: searchData.occupancy.adult,
+      kid: searchData.occupancy.kid,
+    });
+  }, [searchData]);
 
   return (
     <SearchBarContainer>
