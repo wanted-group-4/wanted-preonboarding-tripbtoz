@@ -121,12 +121,12 @@ const HotelCardSection = styled.div`
   @media ${({ theme }) => theme.deviceSize.tablet} {
     width: 100%;
     padding: 0 8px;
-    padding-top: 300px !important;
+    padding-top: 180px !important;
   }
   @media ${({ theme }) => theme.deviceSize.mobile} {
     width: 100%;
     padding: 0;
-    padding-top: 100px !important;
+    padding-top: 180px !important;
   }
 `;
 
