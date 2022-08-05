@@ -21,7 +21,6 @@ const HeaderContainer = styled.div<{ pathname: string }>`
   align-items: center;
   justify-content: space-between;
   padding: 25px 30px;
-  margin-bottom: 25px;
   position: ${({ pathname }) => (pathname === '/' ? 'sticky' : 'static')};
   top: 0;
   background: #fff;
