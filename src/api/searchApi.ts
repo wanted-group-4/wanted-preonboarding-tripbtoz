@@ -41,8 +41,12 @@ export const getHotelInformation = (hotelName: string) => {
 export const fetchFilterHotels = async ({ queryKey }) => {
   const maxPerson = queryKey[2];
   const pageParam = queryKey[3];
-  const response = await axios.get(
-    `${BASE_URL}/hotels?occupancy.max_gte=${maxPerson}&_sort=occupancy.max&_page=${pageParam}`,
-  );
-  return response.data;
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/hotels?occupancy.max_gte=${maxPerson}&_sort=occupancy.max&_page=${pageParam}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
