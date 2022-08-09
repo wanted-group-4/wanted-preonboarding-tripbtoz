@@ -4,7 +4,7 @@
 
 > **by. 원티드 프리온보딩 4팀 (2022.08.01 ~ 06)**
 
-## [배포](https://wanted-preonboarding-tripbtoz.vercel.app)를 클릭하세요.
+## 🚀🚀 [배포](https://wanted-preonboarding-tripbtoz.vercel.app)
 
 # 💡 핵심 로직
 
