@@ -69,7 +69,7 @@ $ yarn start
 | [이가람](https://github.com/devmagrfs) | api 제작 | react-query를 이용한 api 구현 (검색, 예약) | infinite Queries |
 | [서소희](https://github.com/greenish0902) | 서치바 | UI, 검색 내용을 쿼리스트링으로 전달 | 반응형 |
 | [이미림](https://github.com/mrlee323) | 서치바 - 캘린더 모달 | UI, 검색창에 선택한 날짜 전달 | 반응형 |
-| [박소영](https://github.com/soyoung931014) | 서치바 - 인원수 / 예약확인 모달 | UI, 검색창에 모달에서 선택한 인원수 전달 | 반응형 |
+| [박소영](https://github.com/soyoung931014) | 서치바 - 인원수 / 예약확인 모달, 배포 | UI, 검색창에 모달에서 선택한 인원수 전달 | 반응형 |
 | [박지훈](https://github.com/JiehoonPark) | 랜딩페이지, 마이페이지 | UI, 페이지 조회, 무한스크롤 | 반응형, Infinite Queries |
 | [성열하](https://github.com/Hotsumm) | 상세페이지, 상세페이지 카드 | UI, 카드 (스켈레톤, 트랜지션), 예약 및 저장 | 반응형 |
 
