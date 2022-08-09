@@ -145,7 +145,10 @@ const NoReservation = styled.div`
   span {
     color: ${({ theme }) => theme.color.lightRed};
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7eea44d5c328a7011adce0b7bf7b208208dc4f9b
   @media ${({ theme }) => theme.deviceSize.tablet} {
     font-size: 18px;
   }
